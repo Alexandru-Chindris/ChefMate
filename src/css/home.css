@@ -1,0 +1,114 @@
+  @keyframes float {
+    0%, 100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-20px);
+    }
+  }
+
+  @keyframes appear {
+    0% {
+      opacity: 0;
+      transform: scale(0.9);
+    }
+    50% {
+      opacity: 0.5;
+      transform: scale(1.02);
+    }
+    100% {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  html,
+  body,
+  .demo-swiper-multiple,
+  swiper-container,
+  swiper-slide {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+  }
+
+  .demo-swiper-multiple {
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* Fonts */
+  .bree-serif-regular {
+    font-family: "Bree Serif", serif;
+    font-weight: 400;
+    font-style: normal;
+  }
+  
+
+  /* Background Template*/
+  swiper-slide {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    color: white;
+    background: #007aff;
+  }
+
+  /* Template */
+  .slide-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+    background: #34c759;
+    color: white;
+    font-size: 24px;
+  }
+
+  /*  Page 1 */
+  .cont1 {
+      background-image: url(../../public/images/swiper/b1.png);
+      background-size: cover;
+      background-position: center;
+      height: 100%;
+      width: 100%;
+    }
+
+  .hamburger{
+    position: absolute;
+    background-image: url(../../public/images/swiper/hamburger.png);
+    height: 100%;
+    width: 100%;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    animation: float 3s ease-in-out infinite;
+  }
+
+  .arrow{ 
+    position: absolute; 
+    background-image: url(../../public/images/swiper/arrow.png);
+    height: 100%;
+    width: 100%;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    opacity: 0;
+    animation: appear 1s ease-out forwards;
+    animation-delay: 2s;
+  }
+
+  .welcome-text{
+    position: absolute;
+    text-align: center;
+    font-size: 150%;
+    color: #ffffff;
+    top: 74vh;
+    left: 1vh;
+    right: 1vh;
+    opacity: 0;
+    animation: appear 2s ease-out forwards;
+  }
