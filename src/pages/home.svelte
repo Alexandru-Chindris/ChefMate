@@ -21,13 +21,19 @@
     </div>
   </swiper-slide>
   <swiper-slide>
-    <div class="slide-content">Slide 3</div>
-  </swiper-slide>
-  <swiper-slide>
-    <div class="slide-content">Slide 4</div>
-  </swiper-slide>
-  <swiper-slide>
-    <div class="slide-content">Slide 5</div>
+    <div class="cont3">
+      <div class="bree-serif-regular final-text">Ready to get inspired?</div>
+      <div class="container-btn">
+        <Button raised fill class="bree-serif-regular btn1">Login</Button>
+        <Button outline round class="bree-serif-regular btn2 color-orange">Sing in</Button>
+      </div>
+      <Button small class="bree-serif-regular btn3 color-lime">Discover more!</Button>
+      <div class="grid grid-cols-3 grid_logos">
+        <div class="linkedin_btn"></div>
+        <div class="instagram_btn"></div>
+        <div class="github_btn"></div>
+      </div>
+    </div>
   </swiper-slide>
 </swiper-container>
 </Page>
@@ -46,6 +52,7 @@ register();
     Link,
     Toolbar,
     Block,
-    BlockTitle
+    BlockTitle,
+    Button
   } from 'framework7-svelte';
 </script>

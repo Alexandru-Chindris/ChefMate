@@ -153,3 +153,99 @@
     background-repeat: no-repeat;
     background-position: center;
   }
+  
+  /*  Page 2 */
+  .cont3 {
+    background-image: url(../../public/images/swiper/b3.png);
+    background-size: cover;
+    background-position: center;
+    height: 100%;
+    width: 100%;
+  }
+
+  .final-text{
+    position: absolute;
+    text-align: center;
+    font-size: 150%;
+    color: #794719;
+    top: 54vh;
+    left: 1vh;
+    right: 1vh;
+  }
+
+  .container-btn{
+    position: absolute;
+    text-align: center;
+    font-size: 150%;
+    color: #794719;
+    top: 61vh;
+    left: 6vh;
+    right: 1vh;
+  }
+
+  .btn1{
+    width: 35vh;
+    height: 5vh;
+    margin-bottom: 15px;
+    background-color: #c06220;
+  }
+
+  .btn1:hover{
+    width: 35vh;
+    height: 5vh;
+    margin-bottom: 15px;
+    background-color: #cc8959;
+  }
+
+  .btn2{ 
+    width: 35vh;
+    height: 5vh;
+    outline-color: #c06220;
+  }
+
+  .btn2:hover{
+    width: 35vh;
+    height: 5vh;
+    outline-color: #cc8959;
+  }
+
+  .btn3{
+    width: 16vh;
+    height: 5vh;
+    position: absolute;
+    left: 15vh;
+    text-align: center;
+    justify-content: center;
+    color: white;
+    top: 80vh;
+  }
+
+  .grid_logos{
+    position: absolute;
+    display: flex;
+    justify-content: space-around;
+    top: 86vh;
+    left: 10vh;
+    height: 4vh;
+    width: 60%;
+  }
+
+  .grid_logos div {
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    height: 100%;
+    width: 20%;
+  }
+
+  .instagram_btn{ 
+    background-image: url(../../public/images/swiper/instragram_raw_logo.png);
+  }
+
+  .github_btn{ 
+    background-image: url(../../public/images/swiper/github_raw_logo.png);
+  }
+
+  .linkedin_btn{
+    background-image: url(../../public/images/swiper/linkedin_raw_logo.png);
+  }
