@@ -1,100 +1,54 @@
 # ChefMate
 
-## Framework7 CLI Options
+## IT  
+Creatore ed unico sviluppatore: Alexandru Chindris  
+Contact me: [Linkedin](https://www.linkedin.com/in/alexandru-chindris-6a8780213?original_referer=)  
+An english version can be found here [qui](##EN)  
 
-Framework7 app created with following options:
+L'applicazione presente nel repository, chiamata ChefMate, è stata creata con l'obiettivo di acquisire praticità nello sviluppo di applicazioni mobile. Si tratta di un progetto didattico che permette di esplorare tecnologie moderne e migliorare le competenze nello sviluppo di interfacce utente e funzionalità per dispositivi mobili.  
 
-```
-{
-  "cwd": "/home/mega/ChefMate",
-  "type": [
-    "capacitor",
-    "web"
-  ],
-  "name": "ChefMate",
-  "framework": "svelte",
-  "template": "blank",
-  "bundler": "vite",
-  "cssPreProcessor": false,
-  "theming": {
-    "customColor": false,
-    "color": "#007aff",
-    "darkMode": false,
-    "iconFonts": true
-  },
-  "customBuild": false,
-  "pkg": "io.framework7.myapp",
-  "capacitor": {
-    "platforms": [
-      "ios",
-      "android"
-    ]
-  }
-}
+ChefMate è stata sviluppata utilizzando Svelte e Framework7:  
+
+- **Svelte** è un framework JavaScript moderno che consente di costruire interfacce utente in modo semplice ed efficiente. A differenza di altri framework, Svelte compila il codice durante la fase di build, eliminando la necessità di un runtime pesante e migliorando le prestazioni.  
+
+- **Framework7** è un framework front-end progettato specificamente per creare applicazioni mobile con un aspetto nativo. Offre una vasta gamma di componenti predefiniti e strumenti per semplificare lo sviluppo di app per iOS e Android.  
+
+ChefMate è un'applicazione pensata per condividere ricette di cucina, permettendo agli utenti di esplorare, salvare e condividere le loro ricette preferite. Questo progetto rappresenta un'opportunità per approfondire l'uso di queste tecnologie e comprendere meglio il processo di sviluppo di applicazioni mobile.  
+
+## Quick start  
+```shell  
+git clone https://github.com/Alexandru-Chindris/ChefMate.git  
+cd ChefMate  
+npm install  
+npm start
 ```
 
-## Install Dependencies
+## Quick Project Overview
+Website [qui](https://alexandru-chindris.github.io/ChefMate/)
 
-First of all we need to install dependencies, run in terminal
-```
-npm install
-```
+### Disclaimer 
 
-## NPM Scripts
+**Non intendo violare i diritti sul copyright di nessuno. Sono presenti immagini di terzi reperite da Pexels (https://www.pexels.com/it-it/license/). Se trovi qualcosa che ritieni una violazione dei tuoi diritti prima di intraprenere qualsiasi azione legale contattami, sarò lieto di accogliere la tua richiesta e rimuovere l'articolo in questione. Alcune immagini potrebbero prevenire da canva.com**
 
-* 🔥 `start` - run development server
-* 🔧 `dev` - run development server
-* 🔧 `build` - build web app for production
-* 📱 `build-capacitor-ios` - build app and copy it to iOS capacitor project
-* 📱 `build-capacitor-android` - build app and copy it to Android capacitor project
+## EN
 
-## Vite
+The application in the repository, called ChefMate, was created with the goal of gaining practical experience in mobile application development. It is an educational project that allows for the exploration of modern technologies and the improvement of skills in developing user interfaces and functionalities for mobile devices.
 
-There is a [Vite](https://vitejs.dev) bundler setup. It compiles and bundles all "front-end" resources. You should work only with files located in `/src` folder. Vite config located in `vite.config.js`.
-## Capacitor
+ChefMate was developed using Svelte and Framework7:
 
-This project created with Capacitor support. And first thing required before start is to add capacitor platforms, run in terminal:
+- **Svelte** is a modern JavaScript framework that enables building user interfaces in a simple and efficient way. Unlike other frameworks, Svelte compiles the code during the build phase, eliminating the need for a heavy runtime and improving performance.
 
-```
-npx cap add ios && npx cap add android
-```
+- **Framework7** is a front-end framework specifically designed to create mobile applications with a native look and feel. It offers a wide range of pre-built components and tools to simplify the development of apps for iOS and Android.
 
-Check out [official Capacitor documentation](https://capacitorjs.com) for more examples and usage examples.
+ChefMate is an application designed for sharing cooking recipes, allowing users to explore, save, and share their favorite recipes. This project represents an opportunity to deepen the use of these technologies and gain a better understanding of the mobile application development process.
 
-## Assets
-
-Assets (icons, splash screens) source images located in `assets-src` folder. To generate your own icons and splash screen images, you will need to replace all assets in this directory with your own images (pay attention to image size and format), and run the following command in the project directory:
-
-```
-framework7 assets
+## Quick start  
+```shell  
+git clone https://github.com/Alexandru-Chindris/ChefMate.git  
+cd ChefMate  
+npm install  
+npm start
 ```
 
-Or launch UI where you will be able to change icons and splash screens:
-
-```
-framework7 assets --ui
-```
-
-## Capacitor Assets
-
-Capacitor assets are located in `resources` folder which is intended to be used with `cordova-res` tool. To generate  mobile apps assets run in terminal:
-```
-npx cordova-res
-```
-
-Check out [official cordova-res documentation](https://github.com/ionic-team/cordova-res) for more usage examples.
-
-## Documentation & Resources
-
-* [Framework7 Core Documentation](https://framework7.io/docs/)
-
-
-* [Framework7 Svelte Documentation](https://framework7.io/svelte/)
-* [Framework7 Icons Reference](https://framework7.io/icons/)
-* [Community Forum](https://forum.framework7.io)
-
-## Support Framework7
-
-Love Framework7? Support project by donating or pledging on:
-- Patreon: https://patreon.com/framework7
-- OpenCollective: https://opencollective.com/framework7
+## Quick Project Overview
+Website [here](https://alexandru-chindris.github.io/ChefMate/)
