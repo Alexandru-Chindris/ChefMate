@@ -112,3 +112,44 @@
     opacity: 0;
     animation: appear 2s ease-out forwards;
   }
+
+  /*  Page 2 */
+  .cont2 {
+    background-image: url(../../public/images/swiper/b2.png);
+    background-size: cover;
+    background-position: center;
+    height: 100%;
+    width: 100%;
+  }
+
+  .chicken{
+    position: absolute;
+    background-image: url(../../public/images/swiper/chicken.png);
+    height: 100%;
+    width: 100%;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    animation: float 3s ease-in-out infinite;
+  }
+
+  .introduction-text{
+    position: absolute;
+    text-align: center;
+    font-size: 150%;
+    color: #794719;
+    top: 10vh;
+    left: 1vh;
+    right: 1vh;
+  }
+
+  .arrow2{ 
+    position: absolute; 
+    background-image: url(../../public/images/swiper/arrow.png);
+    height: 100%;
+    width: 100%;
+    bottom: 53vh;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+  }

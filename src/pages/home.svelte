@@ -11,7 +11,14 @@
     </div>
   </swiper-slide>
   <swiper-slide>
-    <div class="slide-content">Slide 2</div>
+    <div class="cont2">
+      <div class="chicken"></div>
+      <div class="bree-serif-regular introduction-text">
+        Share recipes, discover new dishes, 
+        and join a community passionate about cooking.
+      </div>
+      <div class="arrow2"></div>
+    </div>
   </swiper-slide>
   <swiper-slide>
     <div class="slide-content">Slide 3</div>
