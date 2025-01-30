@@ -1,11 +1,23 @@
 const { MongoClient } = require('mongodb');
 const express = require('express');
+const cors = require('cors');
 
 const app = express();
 const port = 5000; // Open Port
 
 // Middleware handle JSON
 app.use(express.json());
+
+// Middleware to enable CORS
+app.use(cors());
+
+/* Limiting request only from specified port, removed for web interface.
+
+app.use(cors({
+    origin: 'http://localhost:5174', // Consenti solo richieste da questa origine
+}));
+
+*/
 
 const uri = "mongodb+srv://admin:UHCWq9GeubQjNDny@chefmate.psqxt.mongodb.net/?retryWrites=true&w=majority&appName=ChefMate";
 
@@ -90,3 +102,13 @@ app.delete('/delete', async (req, res) => {
 app.listen(port, () => {
     console.log(`Server in ascolto su http://localhost:${port}`);
 });
+
+/*
+
+For shell debugging
+
+curl -X POST http://localhost:5000/create \
+-H "Content-Type: application/json" \
+-d '{"title": "Spaghetti Carbonara", "ingredients": ["spaghetti", "uova", "guanciale", "pecorino", "pepe"], "instructions": "Cuoci la pasta, prepara la crema di uova e pecorino, unisci tutto con il guanciale."}'
+
+*/
