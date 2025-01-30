@@ -1,74 +1,92 @@
 const { MongoClient } = require('mongodb');
+const express = require('express');
+
+const app = express();
+const port = 5000; // Open Port
+
+// Middleware handle JSON
+app.use(express.json());
 
 const uri = "mongodb+srv://admin:UHCWq9GeubQjNDny@chefmate.psqxt.mongodb.net/?retryWrites=true&w=majority&appName=ChefMate";
 
 const mainDatabase = "sample_mflix";
 const mainCollection = "movies";
 
-const client = new MongoClient(uri);
-
-async function createDocument(collection, string) {
-    try {
-      const result = await collection.insertOne(string);
-      console.log("Documento inserito con ID:", result.insertedId);
-
-    } catch (error) {
-      console.error("Errore:", error);
-    }
-  }
-
-async function updateDocument(collection, search) {
-    try {
-        const result = await collection.updateOne(
-        { title: search }, // Filtro
-        { $set: { title: "Spaghetti alla Carbonara" } } // Modifica
-        );
-        console.log("Documenti aggiornati:", result.modifiedCount);
-    } catch (error) {
-        console.error("Errore:", error);
-    }
-}
-
-async function deleteDocument(collection, search) {
-    try {
-      const result = await collection.deleteOne({ title: search });
-      console.log("Documenti eliminati:", result.deletedCount);
-
-    } catch (error) {
-      console.error("Errore:", error);
-    }
-}
-
-
+// Connecting to database
 async function connectToDatabase() {
-  try {
+    const client = new MongoClient(uri);
     await client.connect();
     console.log("Connesso a MongoDB Atlas!");
-
     const database = client.db(mainDatabase);
     const collection = database.collection(mainCollection);
-
-    // Esempio: Trova tutti i documenti nella collezione
-    const documents = await collection.find({}).toArray();
-    console.log("Documenti trovati:", documents);
-
-    /*
-     createDocument(
-        collection, {
-        title: "Spaghetti Carbonar",
-        ingredients: ["spaghetti", "uova", "guanciale", "pecorino", "pepe"],
-        instructions: "Cuoci la pasta, prepara la crema di uova e pecorino, unisci tutto con il guanciale.",}
-        );
-    */
-    // updateDocument(collection, "Spaghetti Carbonara");
-    // deleteDocument(collection, "Spaghetti alla Carbonara");
-
-
-  } catch (error) {
-    console.error("Errore di connessione a MongoDB:", error);
-  } finally {
-    await client.close();
-  }
+    return { client, collection };
 }
+
+// Endpoint to insert document
+app.post('/create', async (req, res) => {
+    const { title, ingredients, instructions } = req.body;
   
-connectToDatabase();
+    try {
+      const { client, collection } = await connectToDatabase();
+  
+      const result = await collection.insertOne({
+        title,
+        ingredients,
+        instructions,
+      });
+  
+      console.log("Documento inserito con ID:", result.insertedId);
+      res.status(201).json({ message: "Documento creato", id: result.insertedId });
+  
+      await client.close();
+    } catch (error) {
+      console.error("Errore durante l'inserimento:", error);
+      res.status(500).json({ error: "Errore durante l'inserimento" });
+    }
+});
+
+// Endpoint to update document
+app.put('/update', async (req, res) => {
+    const { search, newTitle } = req.body;
+  
+    try {
+      const { client, collection } = await connectToDatabase();
+  
+      const result = await collection.updateOne(
+        { title: search }, // Filtro
+        { $set: { title: newTitle } } // Modifica
+      );
+  
+      console.log("Documenti aggiornati:", result.modifiedCount);
+      res.status(200).json({ message: "Documento aggiornato", modifiedCount: result.modifiedCount });
+  
+      await client.close();
+    } catch (error) {
+      console.error("Errore durante l'aggiornamento:", error);
+      res.status(500).json({ error: "Errore durante l'aggiornamento" });
+    }
+});
+
+// Endpoint to delete document
+app.delete('/delete', async (req, res) => {
+    const { search } = req.body;
+  
+    try {
+      const { client, collection } = await connectToDatabase();
+  
+      const result = await collection.deleteOne({ title: search });
+  
+      console.log("Documenti eliminati:", result.deletedCount);
+      res.status(200).json({ message: "Documento eliminato", deletedCount: result.deletedCount });
+  
+      await client.close();
+    } catch (error) {
+      console.error("Errore durante l'eliminazione:", error);
+      res.status(500).json({ error: "Errore durante l'eliminazione" });
+    }
+});
+
+// Server call
+app.listen(port, () => {
+    console.log(`Server in ascolto su http://localhost:${port}`);
+});
