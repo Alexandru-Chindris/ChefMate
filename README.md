@@ -21,8 +21,6 @@ git clone https://github.com/Alexandru-Chindris/ChefMate.git
 cd ChefMate  
 npm install  
 npm start
-
-node server.js
 ```
 
 ## Quick Project Overview
@@ -50,8 +48,6 @@ git clone https://github.com/Alexandru-Chindris/ChefMate.git
 cd ChefMate  
 npm install  
 npm start
-
-node server.js
 ```
 
 ## Quick Project Overview
