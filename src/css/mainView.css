@@ -1,0 +1,37 @@
+:root {
+    --f7-tabbar-link-active-color: black; /* Icon Toolbar Color */
+}
+
+/* Issue regarding Framework 7 Custom Presets, editing 
+   page-content was resulting changing the global varibiles
+   for the components in all the application.
+*/
+#tab-1.page-content {
+    background-color: white;
+    color: black;
+    padding-top: 0px;
+
+}
+
+#tab-2.page-content {
+    background-color: white;
+    color: black;
+    padding-top: 0px;
+
+}
+
+#tab-3.page-content {
+    background-color: white;
+    color: black;
+    padding-top: 0px;
+
+}
+
+.correction{
+    margin-top: 0px;
+}
+/* Issue solution end */
+
+.navbar{
+    
+}
