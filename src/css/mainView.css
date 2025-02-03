@@ -1,5 +1,13 @@
 :root {
     --f7-tabbar-link-active-color: black; /* Icon Toolbar Color */
+    --bg-color: #eaeaea76;
+}
+
+/* Fonts */
+.bree-serif-regular {
+    font-family: "Bree Serif", serif;
+    font-weight: 400;
+    font-style: normal;
 }
 
 /* Issue regarding Framework 7 Custom Presets, editing 
@@ -7,21 +15,21 @@
    for the components in all the application.
 */
 #tab-1.page-content {
-    background-color: white;
+    background-color: var(--bg-color);
     color: black;
     padding-top: 0px;
 
 }
 
 #tab-2.page-content {
-    background-color: white;
+    background-color: var(--bg-color);
     color: black;
     padding-top: 0px;
 
 }
 
 #tab-3.page-content {
-    background-color: white;
+    background-color: var(--bg-color);
     color: black;
     padding-top: 0px;
 
@@ -33,5 +41,27 @@
 /* Issue solution end */
 
 .navbar{
-    
+    margin-top: 2vh;
+    margin-bottom: 1vh;
+    font-size: x-large;
+}
+
+.single-element{
+    border-radius: 15px;
+    border: 3px solid black;
+    overflow: hidden;
+}
+
+.card-correction{
+    margin-top: 0px;
+}
+
+.skeleton-correction{
+    background-color: var(--bg-color);
+    margin: 0px;
+    padding: 0px;
+}
+
+.reload-style{
+    background-color: var(--bg-color);
 }
