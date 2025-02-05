@@ -41,8 +41,7 @@
                       class="skeleton-text "
                       title="Card Header"
                       content="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi lobortis et massa ac interdum. Cras consequat felis at consequat hendrerit."
-                      footer="Card Footer"
-                    />
+                      footer="Card Footer"/>
                     </ListItem>
                 </Block>
               {/each}
@@ -50,21 +49,35 @@
               {:else}
               <Block class="correction">
                 <NavTitle title="👋 Good morning, $user." hideOnPageScroll transparent class="navbar bree-serif-regular"></NavTitle>
-                <Card
-                  title="Card header"
-                  content="Card with header and footer. Card headers are used to display card titles and footers for additional information or just for custom actions."
-                  footer="Card footer"
-                  class="card-correction"
-                />
-                <List mediaList strongIos dividersIos outlineIos class="single-element">
+                <p class="subtitle-today lato">Today's recipe</p>
+                <Card class="today-recipe-correction">
+                  <p class="cus-today">{today_selection}</p>
+                </Card>
+                <p class="subtitle lato">Recipe that you would love</p>
+                <swiper-container pagination class="demo-swiper-multiple" space-between="10" slides-per-view="auto">
                   {#each items as item, index (index)}
-                  <ListItem title={item.title} subtitle={item.author} />
+                    <swiper-slide>
+                      <div class="single-card">
+                        <img class="card-image" src={item.cover} alt="Unable to load image"/>
+                        <div class="card-content">
+                          <div class="card-stats">
+                            <span class="stat">
+                              <p><Icon f7="heart_circle" size="22px"/></p>
+                              {item.views}
+                            </span>
+                            <span class="stat">
+                              <p><Icon f7="hand_thumbsup" size="22px"/></p>{item.likes}
+                            </span>
+                          </div>
+                          <p class="card-title">{item.title}</p>
+                        </div>
+                      </div>
+                    </swiper-slide>
                   {/each}
-                </List>
-                <p>Tab 1 content</p>
+                </swiper-container>
+                <p>Check this!</p>
               </Block>
           {/if}
-
       </Tab>
       <Tab id="tab-2" class="page-content">
         <Block class="correction">
@@ -79,25 +92,36 @@
     </Tabs>
 </Page>
 <script>
-import {Page, Block, f7, Tabs, Tab, Toolbar, Link, Navbar, NavTitle, List, ListItem, BlockFooter, Card, SkeletonBlock} from 'framework7-svelte';
+import {Page, Block, f7, Tabs, Tab, Toolbar, Link, NavTitle, List, ListItem, Icon, Card} from 'framework7-svelte';
 import '../css/mainView.css';
 
+let today_selection = "Spaghetti di Ludo";
+
 let items = [ 
-    {
-      title: 'Yellow Submarine',
-      author: 'Beatles',
-      cover: 'https://cdn.framework7.io/placeholder/abstract-88x88-1.jpg',
-    },
-    {
-      title: "Don't Stop Me Now",
-      author: 'Queen',
-      cover: 'https://cdn.framework7.io/placeholder/abstract-88x88-2.jpg',
-    },
-    {
-      title: 'Billie Jean',
-      author: 'Michael Jackson',
-      cover: 'https://cdn.framework7.io/placeholder/abstract-88x88-3.jpg',
-    },
+  {
+    title: 'Carbonara',
+    cover: '../images/images/IMG_0819-843347201.jpg',
+    views: 6062,
+    likes: 18,
+  },
+  {
+    title: "Spaghetti di Ludo",
+    cover: '../images/images/spaghetti_ludo.jpg',
+    views: 4500,
+    likes: 25,
+  },
+  {
+    title: 'Billie Jean',
+    cover: 'https://cdn.framework7.io/placeholder/abstract-88x88-3.jpg',
+    views: 3200,
+    likes: 12,
+  },
+  {
+    title: 'Elemento 4',
+    cover: 'https://cdn.framework7.io/placeholder/abstract-88x88-3.jpg',
+    views: 1500,
+    likes: 8,
+  },
   ];
 
 /* Pull to refresh start */
