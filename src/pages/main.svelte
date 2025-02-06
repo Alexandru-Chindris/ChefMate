@@ -80,8 +80,39 @@
           {/if}
       </Tab>
       <Tab id="tab-2" class="page-content">
-        <Block class="correction">
-          <p>Tab 2 content</p>
+        <Block class="correction-tab2">
+          <Navbar title="Search">
+            <Subnavbar inner={true} class="subnav">
+              <div class="searchbar-container">
+                <Searchbar searchContainer=".search-list" searchIn=".item-title" />
+              </div>
+            </Subnavbar>
+          </Navbar>
+      
+          <List strongIos outlineIos dividersIos class="searchbar-not-found">
+            <ListItem title="Nothing found" />
+          </List>
+      
+          <List strongIos outlineIos dividersIos class="list-content search-list searchbar-found">
+            {#each items as item, index (index)}
+              <ListItem>
+                <div slot="media" class="image-container">
+                  <img src={item.cover} alt={item.title} class="list-item-image" />
+                </div>
+                <div slot="title" class="list-item-content">
+                  <div class="item-title">{item.title}</div>
+                  <div class="item-stats">
+                    <span class="stat">
+                      <Icon f7="heart_circle" size="16px" /> {item.views}
+                    </span>
+                    <span class="stat">
+                      <Icon f7="hand_thumbsup" size="16px" /> {item.likes}
+                    </span>
+                  </div>
+                </div>
+              </ListItem>
+            {/each}
+          </List>
         </Block>
       </Tab>
       <Tab id="tab-3" class="page-content">
@@ -92,8 +123,9 @@
     </Tabs>
 </Page>
 <script>
-import {Page, Block, f7, Tabs, Tab, Toolbar, Link, NavTitle, List, ListItem, Icon, Card} from 'framework7-svelte';
+import {Page, Block, f7, Tabs, Tab, Toolbar, Link, NavTitle, List, ListItem, Icon, Card, Navbar, Searchbar, Subnavbar} from 'framework7-svelte';
 import '../css/mainView.css';
+  import { each } from 'dom7';
 
 let today_selection = "Spaghetti di Ludo";
 

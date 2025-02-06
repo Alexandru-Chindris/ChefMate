@@ -4,6 +4,8 @@ import Debug from '../pages/debug.svelte';
 import Login from '../pages/login.svelte';
 import SignIn from '../pages/sign-in.svelte';
 import MainView from '../pages/main.svelte';
+import Main from '../pages/main.svelte';
+import Home from '../pages/home.svelte';
 
 var routes = [
   {
