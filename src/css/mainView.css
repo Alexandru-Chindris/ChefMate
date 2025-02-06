@@ -1,64 +1,46 @@
-:root {
-    --f7-tabbar-link-active-color: black; /* Icon Toolbar Color */
+.main-page {
+    --f7-tabbar-link-active-color: black;
     --bg-color: #eaeaea76;
     --text-color: black;
     --today-pic: url(../images/images/spaghetti_ludo.jpg);
 }
 
 /* Fonts */
-.bree-serif-regular {
+.main-page .bree-serif-regular {
     font-family: "Bree Serif", serif;
     font-weight: 400;
     font-style: normal;
 }
 
-.lato {
+.main-page .lato {
     font-family: 'Lato', sans-serif;
 }
 
-/* Issue regarding Framework 7 Custom Presets, editing 
-   page-content was resulting changing the global varibiles
-   for the components in all the application.
-*/
-#tab-1.page-content {
+.main-page #tab-1.page-content,
+.main-page #tab-2.page-content,
+.main-page #tab-3.page-content {
     background-color: var(--bg-color);
     color: black;
     padding-top: 0px;
-
 }
 
-#tab-2.page-content {
-    background-color: var(--bg-color);
-    color: black;
-    padding-top: 0px;
-
-}
-
-#tab-3.page-content {
-    background-color: var(--bg-color);
-    color: black;
-    padding-top: 0px;
-
-}
-
-.correction{
+.main-page .correction {
     margin-top: 0px;
 }
-/* Issue solution end */
 
-.navbar{
+.main-page .navbar {
     margin-top: 2vh;
     margin-bottom: 1vh;
     font-size: x-large;
 }
 
-.single-element{
+.main-page .single-element {
     border-radius: 15px;
     border: 3px solid black;
     overflow: hidden;
 }
 
-.today-recipe-correction{
+.main-page .today-recipe-correction {
     opacity: 80%;
     width: auto;
     height: 30vh;
@@ -67,7 +49,7 @@
     margin-top: 0px;
 }
 
-.cus-today{
+.main-page .cus-today {
     padding-top: 4px;
     width: inherit;
     height: inherit;
@@ -77,87 +59,77 @@
     font-weight: bold;
 }
 
-.skeleton-correction{
+.main-page .skeleton-correction {
     background-color: var(--bg-color);
     margin: 0px;
     padding: 0px;
 }
 
-.reload-style{
+.main-page .reload-style {
     background-color: var(--bg-color);
 }
 
-.subtitle{
+.main-page .subtitle,
+.main-page .subtitle-today {
     font-size: larger;
     padding: 0px;
     margin: 0px;
 }
 
-.subtitle-today{
-    font-size: larger;
-    padding: 0px;
-    padding-bottom: 8px;
-    margin: 0px;
-}
-
-
-/* Three slide view  */
-
-swiper-slide{
+.main-page swiper-slide {
     width: auto;
     max-height: 100%;
     background: var(--bg-color);
 }
 
-.demo-swiper-multiple {
+.main-page .demo-swiper-multiple {
     width: 44vh;
     height: 30vh;
 }
 
-.single-card {
+.main-page .single-card {
     overflow: hidden;
     max-width: 200px;
     height: auto;
     display: flex;
     flex-direction: column;
 }
-  
-.card-image {
+
+.main-page .card-image {
     width: 100%;
     height: 17vh;
     object-fit: cover;
     border-radius: 14px;
     margin-bottom: 10px;
 }
-  
-.card-content {
+
+.main-page .card-content {
     color: var(--text-color);
     font-weight: bolder;
 }
-  
-.card-title {
+
+.main-page .card-title {
     font-size: 1rem;
     line-height: 0.6;
 }
-  
-.card-stats {
+
+.main-page .card-stats {
     display: flex;
     justify-content: space-between;
     width: 100%;
     margin-top: 5px;
 }
-  
-.stat {
+
+.main-page .stat {
     display: flex;
     align-items: center;
     font-size: 0.9rem;
     color: var(--text-color);
 }
-  
-.stat p {
+
+.main-page .stat p {
     margin: 0px;
     margin-right: 5px;
     font-size: 14px;
     color: var(--stat-icon-color);
 }
-/* Three slide view end */
