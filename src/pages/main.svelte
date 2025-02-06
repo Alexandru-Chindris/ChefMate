@@ -58,7 +58,7 @@
                   {#each items as item, index (index)}
                     <swiper-slide>
                       <div class="single-card">
-                        <img class="card-image" src={item.cover} alt="Unable to load image"/>
+                        <img class="card-image" src={item.cover} alt=""/>
                         <div class="card-content">
                           <div class="card-stats">
                             <span class="stat">
