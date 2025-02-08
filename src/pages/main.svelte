@@ -2,6 +2,22 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Bree+Serif&display=swap" rel="stylesheet">
+  <Popup opened={showPopup} onPopupClosed={closeRecipeModal}>
+    <Page>
+      <Navbar title={selectedRecipe ? selectedRecipe.title : 'Ricetta'}>
+        <Link slot="nav-right" popupClose>Chiudi</Link>
+      </Navbar>
+      <Block>
+        {#if selectedRecipe}
+          <img src={selectedRecipe.cover} alt={selectedRecipe.title} style="width: 100%" />
+          <p>Visite: {selectedRecipe.views}</p>
+          <p>Likes: {selectedRecipe.likes}</p>
+        {:else}
+          <p>No details</p>
+        {/if}
+      </Block>
+    </Page>
+  </Popup>
   <Toolbar tabbar icons position={"bottom"}>
     <Link
       tabLink="#tab-1"
@@ -57,9 +73,11 @@
                 <swiper-container pagination class="demo-swiper-multiple" space-between="10" slides-per-view="auto">
                   {#each items as item, index (index)}
                     <swiper-slide>
-                      <div class="single-card">
-                        <img class="card-image" src={item.cover} alt=""/>
-                        <div class="card-content">
+                      <div class="single-card" >
+                        <a on:click={() => openRecipeModal(item)} href>
+                          <img class="card-image" src={item.cover} alt=""/>
+                        </a>
+                        <div class="card-content" >
                           <div class="card-stats">
                             <span class="stat">
                               <p><Icon f7="heart_circle" size="22px"/></p>
@@ -123,7 +141,7 @@
     </Tabs>
 </Page>
 <script>
-import {Page, Block, f7, Tabs, Tab, Toolbar, Link, NavTitle, List, ListItem, Icon, Card, Navbar, Searchbar, Subnavbar} from 'framework7-svelte';
+import {Page, Block, f7, Tabs, Tab, Toolbar, Link, NavTitle, List, ListItem, Icon, Card, Navbar, Searchbar, Subnavbar, Popup} from 'framework7-svelte';
 import '../css/mainView.css';
 
 let today_selection = "Spaghetti di Ludo";
@@ -136,7 +154,7 @@ let items = [
     likes: 18,
   },
   {
-    title: "Spaghetti di Ludo",
+    title: 'Spaghetti di Ludo',
     cover: '../images/images/spaghetti_ludo.jpg',
     views: 4500,
     likes: 25,
@@ -153,7 +171,70 @@ let items = [
     views: 1500,
     likes: 8,
   },
-  ];
+  {
+    title: 'Pesto Genovese',
+    cover: 'https://cdn.framework7.io/placeholder/abstract-88x88-4.jpg',
+    views: 2890,
+    likes: 11,
+  },
+  {
+    title: 'Riso alla Cantonese',
+    cover: 'https://cdn.framework7.io/placeholder/abstract-88x88-5.jpg',
+    views: 2050,
+    likes: 16,
+  },
+  {
+    title: 'Pollo al Curry',
+    cover: 'https://cdn.framework7.io/placeholder/abstract-88x88-6.jpg',
+    views: 3100,
+    likes: 19,
+  },
+  {
+    title: 'Pizza Montanara',
+    cover: 'https://cdn.framework7.io/placeholder/abstract-88x88-2.jpg',
+    views: 4640,
+    likes: 24,
+  },
+  {
+    title: 'Tiramisù Classico',
+    cover: 'https://cdn.framework7.io/placeholder/abstract-88x88-7.jpg',
+    views: 5270,
+    likes: 31,
+  },
+  {
+    title: 'Cous Cous di Verdure',
+    cover: 'https://cdn.framework7.io/placeholder/abstract-88x88-8.jpg',
+    views: 1790,
+    likes: 10,
+  },
+  {
+    title: 'Salmone al Limone',
+    cover: 'https://cdn.framework7.io/placeholder/abstract-88x88-9.jpg',
+    views: 1990,
+    likes: 14,
+  },
+  {
+    title: 'Focaccia alle Erbe',
+    cover: 'https://cdn.framework7.io/placeholder/abstract-88x88-10.jpg',
+    views: 3205,
+    likes: 17,
+  },
+];
+
+/* Recipe Popup View start */
+let selectedRecipe = null;
+  let showPopup = false;
+
+  function openRecipeModal(item) {
+    selectedRecipe = item;
+    showPopup = true;
+  }
+
+  function closeRecipeModal() {
+    showPopup = false;
+    selectedRecipe = null;
+  }
+/* Recipe Popup View end */
 
 function greetUserByTime() {
   const now = new Date();
