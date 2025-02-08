@@ -8,7 +8,7 @@ import MainView from '../pages/main.svelte';
 var routes = [
   {
     path: '/',
-    component: Home, // HomePage
+    component: HomePage, // HomePage
   },
   {
     name: 'Debug',
