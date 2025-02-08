@@ -10,7 +10,7 @@ import Home from '../pages/home.svelte';
 var routes = [
   {
     path: '/',
-    component: HomePage, // HomePage
+    component: MainView, // HomePage
   },
   {
     name: 'Debug',

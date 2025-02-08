@@ -48,7 +48,7 @@
             </List>
               {:else}
               <Block class="correction">
-                <NavTitle title="👋 Good morning, $user." hideOnPageScroll transparent class="navbar bree-serif-regular"></NavTitle>
+                <NavTitle title="👋 {greetUserByTime()}, $user." hideOnPageScroll transparent class="navbar bree-serif-regular"></NavTitle>
                 <p class="subtitle-today lato">Today's recipe</p>
                 <Card class="today-recipe-correction">
                   <p class="cus-today">{today_selection}</p>
@@ -75,7 +75,7 @@
                     </swiper-slide>
                   {/each}
                 </swiper-container>
-                <p>Check this!</p>
+                <p>Feed</p>
               </Block>
           {/if}
       </Tab>
@@ -125,7 +125,6 @@
 <script>
 import {Page, Block, f7, Tabs, Tab, Toolbar, Link, NavTitle, List, ListItem, Icon, Card, Navbar, Searchbar, Subnavbar} from 'framework7-svelte';
 import '../css/mainView.css';
-  import { each } from 'dom7';
 
 let today_selection = "Spaghetti di Ludo";
 
@@ -155,6 +154,19 @@ let items = [
     likes: 8,
   },
   ];
+
+function greetUserByTime() {
+  const now = new Date();
+  const currentHour = now.getHours();
+
+  if (currentHour >= 5 && currentHour < 12) {
+    return "Good morning";
+  } else if (currentHour >= 12 && currentHour < 18) {
+    return "Good afternoon";
+  } else if (currentHour >= 18 && currentHour < 22) {
+    return "Good evening";
+  }
+}
 
 /* Pull to refresh start */
   function loadMore(done) {

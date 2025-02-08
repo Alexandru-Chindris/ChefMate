@@ -90,13 +90,14 @@
 }
 
 .main-page .demo-swiper-multiple {
-    width: 44vh;
-    height: 30vh;
+    width: 100%;
+    height: auto;
 }
 
 .main-page .single-card {
+    width: auto;
     overflow: hidden;
-    max-width: 200px;
+    /* max-width: 200px; */
     height: auto;
     display: flex;
     flex-direction: column;
