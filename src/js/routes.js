@@ -4,14 +4,11 @@ import Debug from '../pages/debug.svelte';
 import Login from '../pages/login.svelte';
 import SignIn from '../pages/sign-in.svelte';
 import MainView from '../pages/main.svelte';
-import Main from '../pages/main.svelte';
-import Home from '../pages/home.svelte';
-import RecipeDetail from '../pages/recipe-details.svelte'; // not used
 
 var routes = [
   {
     path: '/',
-    component: HomePage, // HomePage
+    component: Home, // HomePage
   },
   {
     name: 'Debug',
