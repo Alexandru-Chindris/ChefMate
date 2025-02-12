@@ -63,7 +63,6 @@
             {/each}
           </div>
           <Block>
-
           </Block>
         </Block>
       {:else}
@@ -77,7 +76,7 @@
     <Link tabLink="#tab-2" text="Discover" iconIos="f7:search" iconMd="material:search" />
     <Link tabLink="#tab-3" text="Profile" iconIos="f7:person" iconMd="material:group"/>
   </Toolbar>
-    <Tabs>
+    <Tabs animated>
       <Tab id="tab-1" class="page-content" tabActive>
           {#if loading}
             <List strongIos outlineIos dividersIos mediaList v-if="loading">
@@ -133,6 +132,18 @@
                     </swiper-slide>
                   {/each}
                 </swiper-container>
+                <p class="subtitle lato">Categories</p>
+                <div class="categories-container">
+                  <swiper-container pagination class="demo-swiper-multiple" space-between="1" slides-per-view="4">
+                    {#each categories as item}
+                       <swiper-slide>
+                        <div class="rounded-container">
+                          <div class="category-name">{item.name}</div>
+                        </div>
+                       </swiper-slide>
+                    {/each}
+                  </swiper-container>
+                </div>
                 <p>Feed</p>
               </Block>
           {/if}
@@ -177,14 +188,66 @@
       </Tab>
       <Tab id="tab-3" class="page-content">
         <Block class="correction">
-          <p>Tab 3 content</p>
+          <div class="extra-ios-space">
+            <Segmented strong tag="p">
+              <Button active={activeStrongButton === 0} onClick={() => (activeStrongButton = 0)}>
+                Profile
+              </Button>
+              <Button active={activeStrongButton === 1} onClick={() => (activeStrongButton = 1)}>
+                Favorites
+              </Button>
+              <Button active={activeStrongButton === 2} onClick={() => (activeStrongButton = 2)}>
+                Settings
+              </Button>
+            </Segmented>
+            {#if activeStrongButton == 0}
+              <h1 class="title-profile">Profile</h1>
+            {/if}
+            {#if activeStrongButton == 1}
+            <div class="container-fav">
+              <h1 class="title-fav">Favorites</h1>
+              <p class="paragraph-fav">You don't have any favorites yet</p>
+              <p class="paragraph-fav">When viewing a recipe, press the favorite icon <Icon f7="heart_circle_fill"/> to add it</p>
+            </div>
+            {/if}
+            {#if activeStrongButton == 2}
+              <h1 class="title-settings">Settings</h1>
+              <div class="container-settings">
+                <List dividersIos simpleList strong outline>
+                  <a href>
+                    <ListItem title="Personal Information">
+                      <Icon f7="chevron_right" color="black" />
+                    </ListItem>
+                  </a>
+                  <a href>
+                    <ListItem title="Security">
+                      <Icon f7="chevron_right" color="black"/>
+                    </ListItem>
+                  </a>
+                  <a href>
+                    <ListItem title="Account Preferences">
+                      <Icon f7="chevron_right" color="black"/>
+                    </ListItem>
+                  </a>
+                  <a href>
+                    <ListItem title="Advanced Settings">
+                      <Icon f7="chevron_right" color="black"/>
+                    </ListItem>
+                  </a>
+                </List>
+              </div>
+            {/if}
+          </div>
         </Block>
       </Tab>
     </Tabs>
 </Page>
 <script>
-import {Page, Block, f7, Tabs, Tab, Toolbar, Link, NavTitle, List, ListItem, Icon, Card, Navbar, Searchbar, Subnavbar, Popup} from 'framework7-svelte';
+import {Page, Block, f7, Tabs, Tab, Toolbar, Link, NavTitle, List, ListItem, Icon, Card, Navbar, Searchbar, Subnavbar, Popup, Segmented, Button} from 'framework7-svelte';
 import '../css/mainView.css';
+
+// Profile page
+let activeStrongButton = 0;
 
 // Logical View
 let ingridients = [
@@ -199,6 +262,16 @@ let ingridients = [
     cover: "../images/ingridients/butter.jpg"
   },
 ]
+
+let categories = [
+    { name: '🍔 Burger'},
+    { name: '🍕 Pizza'},
+    { name: '🍩 Dessert'},
+    { name: '🍣 Sushi'},
+    { name: '🥗 Salads'},
+    { name: '🍹 Drinks'},
+    { name: '🍝 Pasta'},
+];
 
 let items = [
   {

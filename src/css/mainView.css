@@ -339,3 +339,66 @@
     text-align: left;
     color:  black;
 }
+
+/*  Categories  start */
+.categories-container {
+    display: flex;
+    flex-direction: column;
+    padding-top: 10px;
+    background-color: var(--bg-color);
+}
+
+.rounded-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-radius: 20px;
+    padding: 10px;
+    background-color: rgba(0, 0, 0, 0.138);
+    color: black;
+    text-align: center;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.category-name {
+    font-size: 1.67vh;
+    font-weight: bold;
+}
+
+/*  Categories  end */
+
+.extra-ios-space{
+    padding-top: 2vh;
+}
+
+/* Settings tab start */
+.title-settings{
+    font-size: 2rem;
+    margin: 0px;
+}
+
+.container-settings{
+    color: black;
+}
+/* Setting tab end */
+
+/* Favourites tab start */
+.title-fav {
+    font-size: 2rem;
+    margin-bottom: 10px;
+}
+  
+.paragraph-fav {
+    font-size: 2.5vh;
+    margin: 5px 0;
+    color: rgb(77, 75, 75);
+}
+/* Favourites tab end */
+
+/* Profile tab start */
+.title-profile{
+    font-size: 2rem;
+    margin-bottom: 10px;
+}
+/* Profile tab end */
