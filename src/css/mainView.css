@@ -2,7 +2,6 @@
     --f7-tabbar-link-active-color: black;
     --bg-color: #eaeaea76;
     --text-color: black;
-    --today-pic: url(../images/images/spaghetti_ludo.jpg);
     --f7-searchbar-input-bg-color: white;
     --f7-searchbar-placeholder-color: black;
     --f7-searchbar-search-icon-color: black;
@@ -23,16 +22,18 @@
 .main-page #tab-3.page-content {
     background-color: var(--bg-color);
     color: black;
-    padding-top: 0px;
+    /* IoS Space needed for dynamic island*/
+    /* padding-top: 0px; */
 }
 
 .main-page #tab-2.page-content{
     background-color: white;
 }
 
-.main-page .correction {
+/* IoS Space needed for dynamic island*/
+/* .main-page .correction {
     margin-top: 0px;
-}
+} */
 
 .main-page .navbar {
     margin-top: 2vh;
@@ -53,6 +54,7 @@
     background-size: cover;
     background-image: var(--today-pic);
     margin-top: 0px;
+    right: 1.6vh;
 }
 
 .main-page .cus-today {

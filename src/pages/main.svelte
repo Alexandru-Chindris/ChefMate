@@ -92,7 +92,7 @@
                     >
                     <Card
                       outline
-                      class="skeleton-text "
+                      class="skeleton-text"
                       title="Card Header"
                       content="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi lobortis et massa ac interdum. Cras consequat felis at consequat hendrerit."
                       footer="Card Footer"/>
@@ -104,9 +104,11 @@
               <Block class="correction">
                 <NavTitle title="👋 {greetUserByTime()}, $user." hideOnPageScroll transparent class="navbar bree-serif-regular"></NavTitle>
                 <p class="subtitle-today lato">Today's recipe</p>
-                <Card class="today-recipe-correction">
-                  <p class="cus-today">{today_selection}</p>
-                </Card>
+                <a on:click={() => openRecipeModal(today_selection)} href>
+                  <Card class="today-recipe-correction" style="--today-pic: url({today_selection.cover});">
+                    <p class="cus-today">{today_selection.title}</p>
+                  </Card>
+                </a>
                 <p class="subtitle lato">Recipe that you would love</p>
                 <swiper-container pagination class="demo-swiper-multiple" space-between="10" slides-per-view="auto">
                   {#each items as item, index (index)}
@@ -153,7 +155,9 @@
             {#each items as item, index (index)}
               <ListItem>
                 <div slot="media" class="image-container">
-                  <img src={item.cover} alt={item.title} class="list-item-image" />
+                  <a on:click={() => openRecipeModal(item)} href>
+                    <img src={item.cover} alt={item.title} class="list-item-image" />
+                  </a>
                 </div>
                 <div slot="title" class="list-item-content">
                   <div class="item-title">{item.title}</div>
@@ -181,9 +185,6 @@
 <script>
 import {Page, Block, f7, Tabs, Tab, Toolbar, Link, NavTitle, List, ListItem, Icon, Card, Navbar, Searchbar, Subnavbar, Popup} from 'framework7-svelte';
 import '../css/mainView.css';
-
-let today_selection = "Spaghetti di Ludo";
-
 
 // Logical View
 let ingridients = [
@@ -454,6 +455,26 @@ let items = [
   },
 ];
 
+/* Random Day Recipe start */
+let randomValue = null;
+let lastUpdateDate = null;
+
+function updateRandomValue() {
+    const today = new Date().toDateString();
+
+    if (lastUpdateDate !== today) {
+        randomValue = Math.floor(Math.random() * items.length);
+        lastUpdateDate = today;
+    }
+
+    return randomValue;
+}
+
+updateRandomValue();
+let today_selection = items[randomValue];
+
+/* Random Day Recipe end*/
+
 /* Recipe Popup View start */
 let selectedRecipe = null;
 let showPopup = false;
@@ -473,7 +494,7 @@ function greetUserByTime() {
   const now = new Date();
   const currentHour = now.getHours();
 
-  if (currentHour >= 5 && currentHour < 12) {
+  if (currentHour >= 0 && currentHour < 12) {
     return "Good morning";
   } else if (currentHour >= 12 && currentHour < 18) {
     return "Good afternoon";
