@@ -201,9 +201,27 @@
               </Button>
             </Segmented>
             {#if activeStrongButton == 0}
-              <h1 class="title-profile">Profile</h1>
-            {/if}
-            {#if activeStrongButton == 1}
+            <div class="profile-container">
+              <img src={user.profilePicture} alt class="profile-picture" />
+              <h2 class="username">@{user.username}</h2>
+              <p class="bio">{user.bio}</p>
+              <div class="recipes-section">
+                <h3 class="recipes-title">Your Recipes</h3>
+                {#if user.recipes.length > 0}
+                  <div class="recipes-container">
+                    {#each user.recipes as recipe}
+                      <div class="recipe-card">
+                        <img src={recipe.image} alt={recipe.title} />
+                      </div>
+                    {/each}
+                  </div>
+                {:else}
+                  <p class="no-recipes-message">No recipe still!</p>
+                {/if}
+              </div>
+            </div>
+          {/if}
+          {#if activeStrongButton == 1}
             <div class="container-fav">
               <h1 class="title-fav">Favorites</h1>
               <p class="paragraph-fav">You don't have any favorites yet</p>
@@ -248,6 +266,21 @@ import '../css/mainView.css';
 
 // Profile page
 let activeStrongButton = 0;
+
+// user db
+let user = {
+    profilePicture: "../images/profile/user-template.jpg",
+    username: "username",
+    bio: "Love to cook, love life. I'm good in the kitchen, and i like dogs.",
+    recipes: [
+      { id: 1, title: "Pasta al pomodoro", image: "../images/images/IMG_0819-843347201.jpg" },
+      { id: 2, title: "Spaghetti di Ludo", image: "../images/images/spaghetti_ludo.jpg" },
+      { id: 3, title: "Elemento 3", image: "https://cdn.framework7.io/placeholder/abstract-88x88-3.jpg" },
+      { id: 4, title: "Pasta al pomodoro", image: "../images/images/IMG_0819-843347201.jpg" },
+      { id: 5, title: "Spaghetti di Ludo", image: "../images/images/spaghetti_ludo.jpg" },
+      { id: 6, title: "Elemento 3", image: "https://cdn.framework7.io/placeholder/abstract-88x88-3.jpg" }
+    ]
+};
 
 // Logical View
 let ingridients = [
