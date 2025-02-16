@@ -4,11 +4,12 @@ import Debug from '../pages/debug.svelte';
 import Login from '../pages/login.svelte';
 import SignIn from '../pages/sign-in.svelte';
 import MainView from '../pages/main.svelte';
+import Register from '../pages/register_user_form.svelte';
 
 var routes = [
   {
     path: '/',
-    component: HomePage, // Default: HomePage
+    component: Debug, // Default: HomePage
   },
   {
     name: 'Debug',
@@ -38,6 +39,14 @@ var routes = [
     name: 'MainView',
     path: '/mainview/',
     component: MainView,
+    options: {
+      transition: 'f7-push',
+    },
+  },
+  {
+    name: 'RegisterForm',
+    path: '/register_user_form/',
+    component: Register,
     options: {
       transition: 'f7-push',
     },

@@ -204,9 +204,12 @@
             <div class="profile-container">
               <img src={user.profilePicture} alt class="profile-picture" />
               <h2 class="username">@{user.username}</h2>
-              <p class="bio">{user.bio}</p>
+              <p class="bio">{user.bio}</p>               
               <div class="recipes-section">
                 <h3 class="recipes-title">Your Recipes</h3>
+                <Fab position="center-bottom" text="Create">
+                  <Icon f7="plus" md="material:plus" />
+                </Fab>
                 {#if user.recipes.length > 0}
                   <div class="recipes-container">
                     {#each user.recipes as recipe}
@@ -261,7 +264,7 @@
     </Tabs>
 </Page>
 <script>
-import {Page, Block, f7, Tabs, Tab, Toolbar, Link, NavTitle, List, ListItem, Icon, Card, Navbar, Searchbar, Subnavbar, Popup, Segmented, Button} from 'framework7-svelte';
+import {Page, Block, f7, Tabs, Tab, Toolbar, Link, NavTitle, List, ListItem, Icon, Card, Navbar, Searchbar, Subnavbar, Popup, Segmented, Button, Fab} from 'framework7-svelte';
 import '../css/mainView.css';
 
 // Profile page
@@ -278,7 +281,8 @@ let user = {
       { id: 3, title: "Elemento 3", image: "https://cdn.framework7.io/placeholder/abstract-88x88-3.jpg" },
       { id: 4, title: "Pasta al pomodoro", image: "../images/images/IMG_0819-843347201.jpg" },
       { id: 5, title: "Spaghetti di Ludo", image: "../images/images/spaghetti_ludo.jpg" },
-      { id: 6, title: "Elemento 3", image: "https://cdn.framework7.io/placeholder/abstract-88x88-3.jpg" }
+      { id: 6, title: "Elemento 3", image: "https://cdn.framework7.io/placeholder/abstract-88x88-3.jpg" },
+      { id: 4, title: "Pasta al pomodoro", image: "../images/images/IMG_0819-843347201.jpg" },
     ]
 };
 

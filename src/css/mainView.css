@@ -416,7 +416,6 @@
 }
 
 .profile-container {
-    padding: 16px;
     text-align: center;
     background-color: var(--bg-color);
     min-height: calc(100vh - 56px);
