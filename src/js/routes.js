@@ -9,7 +9,7 @@ import Register from '../pages/register_user_form.svelte';
 var routes = [
   {
     path: '/',
-    component: Debug, // Default: HomePage
+    component: HomePage, // Default: HomePage
   },
   {
     name: 'Debug',
