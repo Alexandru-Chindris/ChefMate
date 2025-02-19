@@ -5,6 +5,7 @@ import Login from '../pages/login.svelte';
 import SignIn from '../pages/sign-in.svelte';
 import MainView from '../pages/main.svelte';
 import Register from '../pages/register_user_form.svelte';
+import Feed from '../pages/feed.svelte';
 
 var routes = [
   {
@@ -47,6 +48,15 @@ var routes = [
     name: 'RegisterForm',
     path: '/register_user_form/',
     component: Register,
+    options: {
+      transition: 'f7-push',
+    },
+  },
+  ,
+  {
+    name: 'Feed',
+    path: '/feed/',
+    component: Feed,
     options: {
       transition: 'f7-push',
     },

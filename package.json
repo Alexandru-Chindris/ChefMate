@@ -38,7 +38,7 @@
     "mongodb": "^6.12.0",
     "skeleton-elements": "^4.0.1",
     "svelte": "^4.0.5",
-    "swiper": "^11.2.1"
+    "swiper": "^11.2.4"
   },
   "devDependencies": {
     "@capacitor/cli": "^6.1.2",

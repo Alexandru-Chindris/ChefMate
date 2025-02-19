@@ -1,6 +1,6 @@
 .main-page {
     --f7-tabbar-link-active-color: black;
-    --bg-color: #eaeaea76;
+    --bg-color: white;
     --text-color: black;
     --f7-searchbar-input-bg-color: white;
     --f7-searchbar-placeholder-color: black;
@@ -345,6 +345,10 @@
     display: flex;
     flex-direction: column;
     padding-top: 10px;
+    background-color: var(--bg-color);
+}
+
+.catogory-container{
     background-color: var(--bg-color);
 }
 

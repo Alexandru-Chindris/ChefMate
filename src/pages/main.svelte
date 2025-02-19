@@ -78,7 +78,7 @@
   </Toolbar>
     <Tabs animated>
       <Tab id="tab-1" class="page-content" tabActive>
-          {#if loading}
+          {#if loading} <!-- loading default -->
             <List strongIos outlineIos dividersIos mediaList v-if="loading">
               {#each items as n, index (index)}
                 <Block class="skeleton-correction">
@@ -101,7 +101,11 @@
             </List>
               {:else}
               <Block class="correction">
-                <NavTitle title="👋 {greetUserByTime()}, $user." hideOnPageScroll transparent class="navbar bree-serif-regular"></NavTitle>
+                {#if user.name}
+                  <NavTitle title="👋 {greetUserByTime()}, {user.name}" hideOnPageScroll transparent class="navbar bree-serif-regular"></NavTitle>
+                {:else}
+                  <NavTitle title="👋 {greetUserByTime()}" hideOnPageScroll transparent class="navbar bree-serif-regular"></NavTitle>
+                {/if}
                 <p class="subtitle-today lato">Today's recipe</p>
                 <a on:click={() => openRecipeModal(today_selection)} href>
                   <Card class="today-recipe-correction" style="--today-pic: url({today_selection.cover});">
@@ -136,15 +140,21 @@
                 <div class="categories-container">
                   <swiper-container pagination class="demo-swiper-multiple" space-between="1" slides-per-view="4">
                     {#each categories as item}
-                       <swiper-slide>
+                       <swiper-slide class="catogory-container">
                         <div class="rounded-container">
-                          <div class="category-name">{item.name}</div>
+                          <div class="category-name">{item.icon} <br>{item.name}</div>
                         </div>
                        </swiper-slide>
                     {/each}
                   </swiper-container>
                 </div>
                 <p>Feed</p>
+                <div class="block">
+                  <!-- should be sorted-items in for each , missing sorting algorithm -->
+                  {#each items as item (item.title)}
+                    <Feed item={item} />
+                  {/each}
+                </div>
               </Block>
           {/if}
       </Tab>
@@ -266,17 +276,19 @@
 <script>
 import {Page, Block, f7, Tabs, Tab, Toolbar, Link, NavTitle, List, ListItem, Icon, Card, Navbar, Searchbar, Subnavbar, Popup, Segmented, Button, Fab} from 'framework7-svelte';
 import '../css/mainView.css';
+import Feed from '../pages/feed.svelte';
 
 // Profile page
 let activeStrongButton = 0;
 
 // user db
 let user = {
+    name: "Ludovica",
     profilePicture: "../images/profile/user-template.jpg",
     username: "username",
     bio: "Love to cook, love life. I'm good in the kitchen, and i like dogs.",
     recipes: [
-      { id: 1, title: "Pasta al pomodoro", image: "../images/images/IMG_0819-843347201.jpg" },
+      { id: 1, title: "Pasta al pomodoro", image: "../images/images/IMG_0819-843347201.jpg"},
       { id: 2, title: "Spaghetti di Ludo", image: "../images/images/spaghetti_ludo.jpg" },
       { id: 3, title: "Elemento 3", image: "https://cdn.framework7.io/placeholder/abstract-88x88-3.jpg" },
       { id: 4, title: "Pasta al pomodoro", image: "../images/images/IMG_0819-843347201.jpg" },
@@ -301,13 +313,13 @@ let ingridients = [
 ]
 
 let categories = [
-    { name: '🍔 Burger'},
-    { name: '🍕 Pizza'},
-    { name: '🍩 Dessert'},
-    { name: '🍣 Sushi'},
-    { name: '🥗 Salads'},
-    { name: '🍹 Drinks'},
-    { name: '🍝 Pasta'},
+    { name: 'Burger', icon:'🍔'},
+    { name: 'Pizza', icon:'🍕'},
+    { name: 'Dessert', icon:'🍩'},
+    { name: 'Sushi', icon:'🍣'},
+    { name: 'Salads', icon:'🥗'},
+    { name: 'Drinks', icon:'🍹'},
+    { name: 'Pasta', icon:'🍝'},
 ];
 
 let items = [
