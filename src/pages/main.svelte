@@ -152,7 +152,7 @@
                 <div class="block">
                   <!-- should be sorted-items in for each , missing sorting algorithm -->
                   {#each items as item (item.title)}
-                    <Feed item={item} />
+                    <Feed item={item} user={user} cate={categories}/>
                   {/each}
                 </div>
               </Block>
@@ -327,11 +327,12 @@ let items = [
     title: 'Carbonara',
     cover: '../images/images/IMG_0819-843347201.jpg',
     views: 5322,
+    description: 'Un classico della cucina romana, ricco e saporito.',
     likes: 14,
     serving: 4,
     minutes: 20,
     author: 'Mario Rossi',
-    category: 'Main Course',
+    category: 'Burger',
     ingridients:[
       {
         name: "salt",
@@ -348,11 +349,12 @@ let items = [
     title: 'Spaghetti di Ludo',
     cover: '../images/images/spaghetti_ludo.jpg',
     views: 3745,
+    description: 'Una rivisitazione originale degli spaghetti, un\'esplosione di gusto.',
     likes: 10,
     serving: 4,
     minutes: 15,
     author: 'Luigi Bianchi',
-    category: 'Main Course',
+    category: 'Pizza',
     ingridients:[
       {
         name: "salt 2",
@@ -369,6 +371,7 @@ let items = [
     title: 'Billie Jean',
     cover: 'https://cdn.framework7.io/placeholder/abstract-88x88-3.jpg',
     views: 2987,
+    description: 'Un dessert sorprendente, un omaggio alla pop star.',
     likes: 13,
     serving: 2,
     minutes: 30,
@@ -390,6 +393,7 @@ let items = [
     title: 'Elemento 4',
     cover: 'https://cdn.framework7.io/placeholder/abstract-88x88-3.jpg',
     views: 4120,
+    description: 'Un antipasto sfizioso, ideale per aprire ogni pasto.',
     likes: 7,
     serving: 5,
     minutes: 25,
@@ -411,6 +415,7 @@ let items = [
     title: 'Pesto Genovese',
     cover: 'https://cdn.framework7.io/placeholder/abstract-88x88-4.jpg',
     views: 3666,
+    description: 'Un condimento ligure famoso in tutto il mondo, profumato e intenso.',
     likes: 11,
     serving: 3,
     minutes: 18,
@@ -432,11 +437,12 @@ let items = [
     title: 'Riso alla Cantonese',
     cover: 'https://cdn.framework7.io/placeholder/abstract-88x88-5.jpg',
     views: 2854,
+    description: 'Un classico della cucina cinese, colorato e gustoso.',
     likes: 16,
     serving: 4,
     minutes: 25,
     author: 'Mario Rossi',
-    category: 'Main Course',
+    category: 'Salads',
     ingridients:[
       {
         name: "salt",
@@ -453,11 +459,12 @@ let items = [
     title: 'Pollo al Curry',
     cover: 'https://cdn.framework7.io/placeholder/abstract-88x88-6.jpg',
     views: 3231,
+    description: 'Un piatto esotico e speziato, un viaggio nei sapori dell\'India.',
     likes: 19,
     serving: 2,
     minutes: 22,
     author: 'Carla Neri',
-    category: 'Main Course',
+    category: 'Sushi',
     ingridients:[
       {
         name: "salt",
@@ -474,6 +481,7 @@ let items = [
     title: 'Pizza Montanara',
     cover: 'https://cdn.framework7.io/placeholder/abstract-88x88-2.jpg',
     views: 4977,
+    description: 'Una pizza fritta napoletana, un\'esperienza unica di gusto e tradizione.',
     likes: 18,
     serving: 4,
     minutes: 15,
@@ -495,6 +503,7 @@ let items = [
     title: 'Tiramisù Classico',
     cover: 'https://cdn.framework7.io/placeholder/abstract-88x88-7.jpg',
     views: 5230,
+    description: 'Un dessert italiano amato in tutto il mondo, un\'armonia di sapori e consistenze.',
     likes: 28,
     serving: 6,
     minutes: 30,
@@ -516,11 +525,12 @@ let items = [
     title: 'Cous Cous di Verdure',
     cover: 'https://cdn.framework7.io/placeholder/abstract-88x88-8.jpg',
     views: 1867,
+    description: 'Un piatto mediorientale leggero e nutriente, un\'esplosione di colori e profumi.',
     likes: 10,
     serving: 3,
     minutes: 18,
     author: 'Roberto Di Luca',
-    category: 'Main Course',
+    category: 'Pasta',
     ingridients:[
       {
         name: "salt",
@@ -537,11 +547,12 @@ let items = [
     title: 'Salmone al Limone',
     cover: 'https://cdn.framework7.io/placeholder/abstract-88x88-9.jpg',
     views: 2543,
+    description: 'Un piatto semplice e raffinato, un classico della cucina mediterranea.',
     likes: 12,
     serving: 4,
     minutes: 23,
     author: 'Giulia Verdi',
-    category: 'Main Course',
+    category: 'Pasta',
     ingridients:[
       {
         name: "salt",
@@ -558,11 +569,12 @@ let items = [
     title: 'Focaccia alle Erbe',
     cover: 'https://cdn.framework7.io/placeholder/abstract-88x88-10.jpg',
     views: 3120,
+    description: 'Un pane lievitato profumato e gustoso, ideale per accompagnare ogni pasto.',
     likes: 17,
     serving: 3,
     minutes: 20,
     author: 'Carla Neri',
-    category: 'Appetizer',
+    category: 'Sushi',
     ingridients:[
       {
         name: "salt",
