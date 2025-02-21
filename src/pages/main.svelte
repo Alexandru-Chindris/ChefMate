@@ -238,7 +238,7 @@
             <div class="container-fav">
               <h1 class="title-fav">Favorites</h1>
               <p class="paragraph-fav">You don't have any favorites yet</p>
-              <p class="paragraph-fav">When viewing a recipe, press the favorite icon <Icon f7="heart_circle_fill"/> to add it</p>
+              <p class="paragraph-fav">When viewing a recipe, press the favorite icon <Icon f7="bookmark"/> to add it</p>
             </div>
             {/if}
             {#if activeStrongButton == 2}
