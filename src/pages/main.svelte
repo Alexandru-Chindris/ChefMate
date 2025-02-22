@@ -101,7 +101,7 @@
             </List>
               {:else}
               <Block class="correction">
-                {#if user.name}
+                {#if isLogin}
                   <NavTitle title="👋 {greetUserByTime()}, {user.name}" hideOnPageScroll transparent class="navbar bree-serif-regular"></NavTitle>
                 {:else}
                   <NavTitle title="👋 {greetUserByTime()}" hideOnPageScroll transparent class="navbar bree-serif-regular"></NavTitle>
@@ -197,86 +197,119 @@
         </Block>
       </Tab>
       <Tab id="tab-3" class="page-content">
-        <Block class="correction">
-          <div class="extra-ios-space">
-            <Segmented strong tag="p">
-              <Button active={activeStrongButton === 0} onClick={() => (activeStrongButton = 0)}>
-                Profile
-              </Button>
-              <Button active={activeStrongButton === 1} onClick={() => (activeStrongButton = 1)}>
-                Favorites
-              </Button>
-              <Button active={activeStrongButton === 2} onClick={() => (activeStrongButton = 2)}>
-                Settings
-              </Button>
-            </Segmented>
-            {#if activeStrongButton == 0}
-            <div class="profile-container">
-              <img src={user.profilePicture} alt class="profile-picture" />
-              <h2 class="username">@{user.username}</h2>
-              <p class="bio">{user.bio}</p>               
-              <div class="recipes-section">
-                <h3 class="recipes-title">Your Recipes</h3>
-                <Fab position="center-bottom" text="Create">
-                  <Icon f7="plus" md="material:plus" />
-                </Fab>
-                {#if user.recipes.length > 0}
-                  <div class="recipes-container">
-                    {#each user.recipes as recipe}
-                      <div class="recipe-card">
-                        <img src={recipe.image} alt={recipe.title} />
+          {#if isLogin}
+            <Block class="correction">
+              <div class="extra-ios-space">
+                <Segmented strong tag="p">
+                  <Button active={activeStrongButton === 0} onClick={() => (activeStrongButton = 0)}>
+                    Profile
+                  </Button>
+                  <Button active={activeStrongButton === 1} onClick={() => (activeStrongButton = 1)}>
+                    Favorites
+                  </Button>
+                  <Button active={activeStrongButton === 2} onClick={() => (activeStrongButton = 2)}>
+                    Settings
+                  </Button>
+                </Segmented>
+                {#if activeStrongButton == 0}
+                <div class="profile-container">
+                  <img src={user.profilePicture} alt class="profile-picture" />
+                  <h2 class="username">@{user.username}</h2>
+                  <p class="bio">{user.bio}</p>               
+                  <div class="recipes-section">
+                    <h3 class="recipes-title">Your Recipes</h3>
+                      <Fab position="center-bottom" text="Create" on:click={() => toRecipe()}>
+                        <Icon f7="plus" md="material:plus"/>
+                      </Fab>
+                    {#if user.recipes.length > 0}
+                      <div class="recipes-container">
+                        {#each user.recipes as recipe}
+                          <div class="recipe-card">
+                            <img src={recipe.image} alt={recipe.title} />
+                          </div>
+                        {/each}
                       </div>
-                    {/each}
+                    {:else}
+                      <p class="no-recipes-message">No recipe still!</p>
+                    {/if}
                   </div>
-                {:else}
-                  <p class="no-recipes-message">No recipe still!</p>
+                </div>
+              {/if}
+              {#if activeStrongButton == 1}
+                <div class="container-fav">
+                  <h1 class="title-fav">Favorites</h1>
+                  <p class="paragraph-fav">You don't have any favorites yet</p>
+                  <p class="paragraph-fav">When viewing a recipe, press the favorite icon <Icon f7="heart_circle_fill"/> to add it</p>
+                </div>
+                {/if}
+                {#if activeStrongButton == 2}
+                  <h1 class="title-settings">Settings</h1>
+                  <div class="container-settings">
+                    <List dividersIos simpleList strong outline>
+                      <a href>
+                        <ListItem title="Personal Information">
+                          <Icon f7="chevron_right" color="black" />
+                        </ListItem>
+                      </a>
+                      <a href>
+                        <ListItem title="Security">
+                          <Icon f7="chevron_right" color="black"/>
+                        </ListItem>
+                      </a>
+                      <a href>
+                        <ListItem title="Account Preferences">
+                          <Icon f7="chevron_right" color="black"/>
+                        </ListItem>
+                      </a>
+                      <a href>
+                        <ListItem title="Advanced Settings">
+                          <Icon f7="chevron_right" color="black"/>
+                        </ListItem>
+                      </a>
+                    </List>
+                  </div>
                 {/if}
               </div>
-            </div>
-          {/if}
-          {#if activeStrongButton == 1}
-            <div class="container-fav">
-              <h1 class="title-fav">Favorites</h1>
-              <p class="paragraph-fav">You don't have any favorites yet</p>
-              <p class="paragraph-fav">When viewing a recipe, press the favorite icon <Icon f7="bookmark"/> to add it</p>
-            </div>
-            {/if}
-            {#if activeStrongButton == 2}
-              <h1 class="title-settings">Settings</h1>
-              <div class="container-settings">
-                <List dividersIos simpleList strong outline>
-                  <a href>
-                    <ListItem title="Personal Information">
-                      <Icon f7="chevron_right" color="black" />
-                    </ListItem>
-                  </a>
-                  <a href>
-                    <ListItem title="Security">
-                      <Icon f7="chevron_right" color="black"/>
-                    </ListItem>
-                  </a>
-                  <a href>
-                    <ListItem title="Account Preferences">
-                      <Icon f7="chevron_right" color="black"/>
-                    </ListItem>
-                  </a>
-                  <a href>
-                    <ListItem title="Advanced Settings">
-                      <Icon f7="chevron_right" color="black"/>
-                    </ListItem>
-                  </a>
-                </List>
+            </Block>
+        {:else}
+          <Block class="container-notlogged">
+            <LoginScreenTitle>Login</LoginScreenTitle>
+              <List form>
+                <ListInput
+                outline
+                label="E-mail"
+                floatingLabel
+                type="email"
+                value={email}
+                placeholder="Your e-mail"
+                onInput={(e) => email = e.target.value}
+                clearButton
+                />
+                <ListInput
+                  outline
+                  label="Password"
+                  floatingLabel
+                  type="password"
+                  value={password}
+                  placeholder="Your password"
+                  onInput={(e) => password = e.target.value}
+                  clearButton
+                />
+                <ListButton onClick={handleSubmit}>Continue</ListButton>
+              </List>
+              <div class="link">
+                <a href on:click={toRegister}><p class="register-text">Are you new? Create an account today!</p></a>
               </div>
-            {/if}
-          </div>
-        </Block>
+          </Block>        
+        {/if}
       </Tab>
     </Tabs>
 </Page>
 <script>
-import {Page, Block, f7, Tabs, Tab, Toolbar, Link, NavTitle, List, ListItem, Icon, Card, Navbar, Searchbar, Subnavbar, Popup, Segmented, Button, Fab} from 'framework7-svelte';
+import {Page, Block, f7, Tabs, Tab, Toolbar, Link, NavTitle, List, ListItem, Icon, Card, Navbar, Searchbar, Subnavbar, Popup, Segmented, Button, Fab, LoginScreenTitle, ListButton, ListInput} from 'framework7-svelte';
 import '../css/mainView.css';
 import Feed from '../pages/feed.svelte';
+import { createEventDispatcher } from 'svelte';
 
 // Profile page
 let activeStrongButton = 0;
@@ -284,6 +317,7 @@ let activeStrongButton = 0;
 // user db
 let user = {
     name: "Ludovica",
+    email: "ludovica@gmail.com",
     profilePicture: "../images/profile/user-template.jpg",
     username: "username",
     bio: "Love to cook, love life. I'm good in the kitchen, and i like dogs.",
@@ -297,6 +331,41 @@ let user = {
       { id: 4, title: "Pasta al pomodoro", image: "../images/images/IMG_0819-843347201.jpg" },
     ]
 };
+
+function toRecipe(){
+  f7.views.main.router.navigate('/recipe-add/');
+}
+
+function toRegister(){
+  f7.views.main.router.navigate('/register_user_form/');
+}
+// Login/Register start
+let email = '';
+let password = '';
+let isLogin = true; // default false
+
+const dispatch = createEventDispatcher();
+
+
+
+function handleSubmit() {
+    if (isLogin) {
+      // Login logic
+      f7.dialog.alert(`Email: ${email}<br>Password: ${password}`, () => {
+        // Simulate successful login
+        dispatch('loginSuccess', { email });
+      });
+    } else {
+      // Signup logic
+      f7.dialog.alert(`Signup with Email: ${email}<br>Password: ${password}`, () => {
+        // Simulate successful signup
+        dispatch('signupSuccess', { email });
+        // Toggle back to login after signup
+        isLogin = true;
+      });
+    }
+}
+// Login/Register end
 
 // Logical View
 let ingridients = [

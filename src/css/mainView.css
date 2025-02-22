@@ -5,6 +5,7 @@
     --f7-searchbar-input-bg-color: white;
     --f7-searchbar-placeholder-color: black;
     --f7-searchbar-search-icon-color: black;
+    --f7-input-placeholder-color: #888;
 }
 
 /* Fonts */
@@ -487,3 +488,31 @@
      color:#555;
 }
 /* Profile tab end */
+
+/* Not logged container start */
+.container-notlogged{
+    background-color: var(--bg-color);
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.link{
+    width: 100%;
+    color: black;
+    font-size: 2vh;
+    justify-content: center;
+    align-items: center;
+}
+
+.item-input-outline .item-content .item-label, .item-input-outline.item-content .item-label, .input-outline .item-label, .item-input-outline .item-content .item-floating-label, .item-input-outline.item-content .item-floating-label, .input-outline .item-floating-label {
+    pointer-events: none;
+    background: var(--bg-color);
+    z-index: 1;
+    padding: 4px;
+}
+
+.register-text{
+    color: gray;
+    margin: 0px;
+}
+/* Not logged container end */

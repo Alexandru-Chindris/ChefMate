@@ -6,6 +6,7 @@ import SignIn from '../pages/sign-in.svelte';
 import MainView from '../pages/main.svelte';
 import Register from '../pages/register_user_form.svelte';
 import Feed from '../pages/feed.svelte';
+import RecipeAdd from "../pages/recipe-add.svelte";
 
 var routes = [
   {
@@ -52,7 +53,6 @@ var routes = [
       transition: 'f7-push',
     },
   },
-  ,
   {
     name: 'Feed',
     path: '/feed/',
@@ -60,7 +60,15 @@ var routes = [
     options: {
       transition: 'f7-push',
     },
-  }
+  },
+  {
+    name: 'Recipe',
+    path: '/recipe-add/',
+    component: RecipeAdd,
+    options: {
+      transition: 'f7-push',
+    },
+  },
 ];
 
 export default routes;

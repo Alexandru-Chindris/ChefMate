@@ -81,13 +81,7 @@
           <a href class="bookmark">
             <Icon f7="bookmark" />
           </a>
-          <a
-            href
-            class="heart"
-            class:liked
-            on:click={toggleLike}
-            style="transform: translateX({$heartShake}px);"
-          >
+          <a href class="heart" class:liked on:click={toggleLike} style="transform: translateX({$heartShake}px);">
             {#if liked}
                 <Icon f7='heart_fill' />
             {:else}
@@ -95,8 +89,7 @@
             {/if}
 
             {#each particles as particle (particle)}
-              <div
-                class="particle"
+              <div class="particle"
                 style="
                   width: {particle.size}px;
                   height: {particle.size}px;
@@ -119,115 +112,136 @@
     </div>
   </div>
   
-  <style>
-    .feed-container {
-      background-color: #f2f2f7;
-      border-radius: 20px;
-      margin-bottom: 20px;
-      overflow: hidden;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-      font-family: sans-serif;
-      position: relative;
-    }
+<style>
+.feed-container {
+    background-color: #f2f2f7;
+    border-radius: 20px;
+    margin-bottom: 20px;
+    overflow: hidden;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    font-family: sans-serif;
+    position: relative;
+}
   
-    .image-container {
-      width: 100%;
-      height: 200px;
-      overflow: hidden;
-    }
+.image-container {
+    width: 100%;
+    height: 200px;
+    overflow: hidden;
+}
   
-    .image-container img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-    }
+.image-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
   
-    .text-content {
-      padding: 15px;
-    }
-  
-    .text-content h2 {
-      font-size: 1.2em;
-      margin-bottom: 8px;
-      color: #222;
-    }
-  
-    .text-content .description {
-      font-size: 0.9em;
-      color: #555;
-      line-height: 1.4;
-    }
-  
-    .feed-footer {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding-top: 15px;
-      border-top: 1px solid #ddd;
-      margin-top: 10px;
-    }
-  
-    .source {
-      display: flex;
-      align-items: center;
-      font-size: 0.85em;
-      color: #333;
-    }
-  
-    .source-logo {
-      width: 20px;
-      height: 20px;
-      border-radius: 50%;
-      margin-right: 5px;
-      object-fit: cover;
-    }
-  
-    .heart {
-      display: inline-block;
-      font-size: 1.2em;
-      margin-left: 15px;
-      position: relative; /* For particle positioning */
-      cursor: pointer;
-    }
-  
-    .heart:hover {
-      color: red;
-    }
-  
-    .heart.liked {
-      color: red;
-    }
-  
-    .bookmark {
-      color: #333;
-      font-size: 1.2em;
-      margin-left: 15px;
-    }
-  
-    a{
-        color: #333;
-    }
+.text-content {
+    padding: 15px;
+}
 
-    .bookmark:hover {
-      color: blue;
-    }
+.text-content h2 {
+    font-size: 1.2em;
+    margin-bottom: 8px;
+    color: #222;
+}
   
-    .category-container {
-      padding-top: 0.5vh;
-      font-size: 2vh;
-      padding-left: 1.5vh;
-      padding-right: 1.5vh;
-      width: fit-content;
-      height: 3.4vh;
-      background-color: rgba(128, 128, 128, 0.466);
-      border-radius: 30px;
-    }
+.text-content .description {
+    font-size: 0.9em;
+    color: #555;
+    line-height: 1.4;
+}
+ 
+.feed-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 15px;
+    border-top: 1px solid #ddd;
+    margin-top: 10px;
+}
   
-    .particle {
-      position: absolute;
-      border-radius: 50%;
-      pointer-events: none;
-    }
-  </style>
+.source {
+    display: flex;
+    align-items: center;
+    font-size: 0.85em;
+    color: #333;
+}
   
+.source-logo {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    margin-right: 5px;
+    object-fit: cover;
+}
+  
+.heart {
+    display: inline-block;
+    font-size: 1.2em;
+    margin-left: 15px;
+    position: relative; /* For particle positioning */
+    cursor: pointer;
+}
+  
+.heart:hover {
+    color: red;
+}
+  
+.heart.liked {
+    color: red;
+}
+  
+.bookmark {
+    color: #333;
+    font-size: 1.2em;
+    margin-left: 15px;
+}
+  
+a{
+    color: #333;
+}
+
+.bookmark:hover {
+    color: blue;
+}
+  
+.category-container {
+    padding-top: 0.5vh;
+    font-size: 2vh;
+    padding-left: 1.5vh;
+    padding-right: 1.5vh;
+    width: fit-content;
+    height: 3.4vh;
+    background-color: rgba(128, 128, 128, 0.466);
+    border-radius: 30px;
+}
+  
+.particle {
+    position: absolute;
+    border-radius: 50%;
+    pointer-events: none;
+}
+
+.bookmark {
+  color: #333;
+  font-size: 1.2em;
+  margin-left: 15px;
+  position: relative; /* Per il posizionamento delle particelle */
+  cursor: pointer;
+}
+
+.bookmark:hover {
+  color: blue;
+}
+
+.bookmark.bookmarked {
+  color: blue;
+}
+
+.particle2 {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+}
+</style>

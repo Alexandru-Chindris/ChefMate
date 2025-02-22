@@ -1,6 +1,17 @@
-.register-page{
-
+.container_btn{
+    width: 100%;
+    align-items: center;
+    justify-content: center;
 }
+
+.submit_btn {
+    width: 30%;
+    color: black;
+    background-color: rgba(168, 211, 216, 0.662);
+    margin: 0 auto;
+    display: block;
+}
+
 
 .register-page .container-register{
     padding: 0px;

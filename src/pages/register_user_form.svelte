@@ -1,61 +1,133 @@
 <Page class="register-page">
-    <Navbar>Register</Navbar>
-    <Block class="container-register">
-      <List strongIos dividersIos insetIos>
-        <ListInput outline label="Username" floatingLabel type="text" placeholder="Your username" clearButton>
-          <i class="icon demo-list-icon" slot="media" />
-        </ListInput>
-  
-        <ListInput
+  <Block class="container-register">
+    <List strongIos dividersIos insetIos>
+      <br />
+      <LoginScreenTitle>Register</LoginScreenTitle>
+      <br />
+      <ListInput
         outline
         label="E-mail"
         floatingLabel
         type="email"
         placeholder="Your e-mail"
         clearButton
-      >
-        <i class="icon demo-list-icon" slot="media" />
-      </ListInput>
-  
-        <ListInput
-          outline
-          label="Password"
-          floatingLabel
-          type="password"
-          placeholder="Your password"
-          clearButton
+        required
+        bind:value={email}
+      />
+      <ListInput
+        outline
+        label="Password"
+        floatingLabel
+        type="password"
+        placeholder="Your password"
+        clearButton
+        required
+        bind:value={password}
+      />
+      <ListInput
+        outline
+        label="Name"
+        floatingLabel
+        type="text"
+        placeholder="Your username"
+        clearButton
+        required
+        bind:value={username}
+      />
+      <ListInput
+        outline
+        label="Bio"
+        floatingLabel
+        type="textarea"
+        resizable
+        placeholder="Bio"
+        clearButton
+        bind:value={bio}
+      />
+      <br />
+      <div class="container_btn">
+        <Button
+          preloader
+          loading={isLoading2}
+          onClick={load2}
+          large
+          fill
+          round
+          class="submit_btn"
+          on:click={toVerify}>Register</Button
         >
-          <i class="icon demo-list-icon" slot="media" />
-        </ListInput>
-  
-        <ListInput
-          outline
-          label="Phone"
-          floatingLabel
-          type="tel"
-          placeholder="Your phone number"
-          clearButton
-        >
-          <i class="icon demo-list-icon" slot="media" />
-        </ListInput>
-  
-        <ListInput
-          outline
-          label="Bio"
-          floatingLabel
-          type="textarea"
-          resizable
-          placeholder="Bio"
-          clearButton
-        >
-          <i class="icon demo-list-icon" slot="media" />
-        </ListInput>
-      </List>
-    </Block>
+      </div>
+      <br />
+    </List>
+  </Block>
 </Page>
 
 <script>
-    import { Navbar, Page, Block, List, ListInput } from 'framework7-svelte';
-    import '../css/register.css';
+  import {
+    Button,
+    Page,
+    Block,
+    List,
+    ListInput,
+    LoginScreenTitle,
+    f7,
+  } from 'framework7-svelte';
+  import '../css/register.css';
+
+  let isLoading2 = false;
+  let username = '';
+  let email = '';
+  let password = '';
+  let bio = '';
+
+  const load2 = () => {
+    if (isLoading2) return;
+    isLoading2 = true;
+    setTimeout(() => {
+      isLoading2 = false;
+    }, 1000);
+  };
+
+  function validateEmail(email) {
+    let re = /\S+@\S+\.\S+/;
+    return re.test(email);
+  }
+
+  let notificationCloseOnClick;
+  function showNotificationCloseOnClick() {
+    if (!notificationCloseOnClick) {
+      notificationCloseOnClick = f7.notification.create({
+        icon: '<i f7="hand_raised_slash" color="black"></i>',
+        title: 'ChefMate',
+        titleRightText: 'now',
+        subtitle: 'Wrong data submited',
+        text: 'Click me to close',
+        closeOnClick: true,
+      });
+    }
+    notificationCloseOnClick.open();
+  }
+
+  function toVerify() {
+    if (!username) {
+      showNotificationCloseOnClick();
+      return;
+    }
+    if (!email) {
+      showNotificationCloseOnClick();
+      return;
+    }
+    if (!validateEmail(email)) {
+      showNotificationCloseOnClick();
+      return;
+    }
+    if (!password || password.length < 8) {
+      showNotificationCloseOnClick();
+      return;
+    }
+
+    function submit(){
+      
+    }
+  }
 </script>
-  
