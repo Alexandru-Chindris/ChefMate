@@ -78,7 +78,7 @@
   </Toolbar>
     <Tabs animated>
       <Tab id="tab-1" class="page-content" tabActive>
-          {#if false} <!-- loading default -->
+          {#if loading} <!-- loading default -->
             <List strongIos outlineIos dividersIos mediaList v-if="loading">
               {#each items as n, index (index)}
                 <Block class="skeleton-correction">
