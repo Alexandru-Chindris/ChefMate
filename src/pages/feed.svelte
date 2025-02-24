@@ -234,14 +234,4 @@ a{
 .bookmark:hover {
   color: blue;
 }
-
-.bookmark.bookmarked {
-  color: blue;
-}
-
-.particle2 {
-  position: absolute;
-  border-radius: 50%;
-  pointer-events: none;
-}
 </style>

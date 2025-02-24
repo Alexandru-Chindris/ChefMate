@@ -78,7 +78,7 @@
   </Toolbar>
     <Tabs animated>
       <Tab id="tab-1" class="page-content" tabActive>
-          {#if loading} <!-- loading default -->
+          {#if false} <!-- loading default -->
             <List strongIos outlineIos dividersIos mediaList v-if="loading">
               {#each items as n, index (index)}
                 <Block class="skeleton-correction">
@@ -139,7 +139,7 @@
                 <p class="subtitle lato">Categories</p>
                 <div class="categories-container">
                   <swiper-container pagination class="demo-swiper-multiple" space-between="1" slides-per-view="4">
-                    {#each categories as item}
+                    {#each categoryValue as item}
                        <swiper-slide class="catogory-container">
                         <div class="rounded-container">
                           <div class="category-name">{item.icon} <br>{item.name}</div>
@@ -152,7 +152,7 @@
                 <div class="block">
                   <!-- should be sorted-items in for each , missing sorting algorithm -->
                   {#each items as item (item.title)}
-                    <Feed item={item} user={user} cate={categories}/>
+                    <Feed item={item} user={user} cate={categoryValue}/>
                   {/each}
                 </div>
               </Block>
@@ -239,7 +239,7 @@
                 <div class="container-fav">
                   <h1 class="title-fav">Favorites</h1>
                   <p class="paragraph-fav">You don't have any favorites yet</p>
-                  <p class="paragraph-fav">When viewing a recipe, press the favorite icon <Icon f7="heart_circle_fill"/> to add it</p>
+                  <p class="paragraph-fav">When viewing a recipe, press the favorite icon <Icon f7="bookmark"/> to add it</p>
                 </div>
                 {/if}
                 {#if activeStrongButton == 2}
@@ -310,6 +310,9 @@ import {Page, Block, f7, Tabs, Tab, Toolbar, Link, NavTitle, List, ListItem, Ico
 import '../css/mainView.css';
 import Feed from '../pages/feed.svelte';
 import { createEventDispatcher } from 'svelte';
+import { category } from '../js/store.js';
+
+$: categoryValue = $category;
 
 // Profile page
 let activeStrongButton = 0;
@@ -342,21 +345,17 @@ function toRegister(){
 // Login/Register start
 let email = '';
 let password = '';
-let isLogin = true; // default false
+let isLogin = false; // default false
 
 const dispatch = createEventDispatcher();
 
-
-
 function handleSubmit() {
     if (isLogin) {
-      // Login logic
       f7.dialog.alert(`Email: ${email}<br>Password: ${password}`, () => {
         // Simulate successful login
         dispatch('loginSuccess', { email });
       });
     } else {
-      // Signup logic
       f7.dialog.alert(`Signup with Email: ${email}<br>Password: ${password}`, () => {
         // Simulate successful signup
         dispatch('signupSuccess', { email });
@@ -366,30 +365,6 @@ function handleSubmit() {
     }
 }
 // Login/Register end
-
-// Logical View
-let ingridients = [
-  {
-    name: "salt",
-    kg: "23.9g",
-    cover: "../images/ingridients/salt.jpg"
-  },
-  {
-    name: "butter",
-    kg: "3.9g",
-    cover: "../images/ingridients/butter.jpg"
-  },
-]
-
-let categories = [
-    { name: 'Burger', icon:'🍔'},
-    { name: 'Pizza', icon:'🍕'},
-    { name: 'Dessert', icon:'🍩'},
-    { name: 'Sushi', icon:'🍣'},
-    { name: 'Salads', icon:'🥗'},
-    { name: 'Drinks', icon:'🍹'},
-    { name: 'Pasta', icon:'🍝'},
-];
 
 let items = [
   {

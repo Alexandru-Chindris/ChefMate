@@ -8,6 +8,8 @@
         outline
         label="E-mail"
         floatingLabel
+        info=""
+        validate
         type="email"
         placeholder="Your e-mail"
         clearButton
@@ -18,6 +20,8 @@
         outline
         label="Password"
         floatingLabel
+        info=""
+        validate
         type="password"
         placeholder="Your password"
         clearButton
@@ -28,6 +32,8 @@
         outline
         label="Name"
         floatingLabel
+        info=""
+        validate
         type="text"
         placeholder="Your username"
         clearButton
