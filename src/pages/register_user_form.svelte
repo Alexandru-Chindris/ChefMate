@@ -131,9 +131,5 @@
       showNotificationCloseOnClick();
       return;
     }
-
-    function submit(){
-      
-    }
   }
 </script>

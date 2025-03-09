@@ -2,6 +2,7 @@
     display: flex;
     align-items: center;
     position: relative;
+    padding-left: 0px;
   }
 
   .ingredient-image {
@@ -23,4 +24,8 @@
 
 .ingredient-item ul{
     padding: 0px;
+}
+
+.list ul ul{
+  padding-left: 30px;
 }

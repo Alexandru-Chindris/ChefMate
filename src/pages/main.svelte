@@ -345,7 +345,7 @@ function toRegister(){
 // Login/Register start
 let email = '';
 let password = '';
-let isLogin = false; // default false
+let isLogin = true; // default false
 
 const dispatch = createEventDispatcher();
 
@@ -360,7 +360,7 @@ function handleSubmit() {
         // Simulate successful signup
         dispatch('signupSuccess', { email });
         // Toggle back to login after signup
-        isLogin = true;
+        /* isLogin = true; */
       });
     }
 }
@@ -409,7 +409,8 @@ let items = [
         name: "butter 2",
         kg: "3.9g",
         cover: "../images/ingridients/butter.jpg"
-      },],
+      },
+    ],
   },
   {
     title: 'Billie Jean',
