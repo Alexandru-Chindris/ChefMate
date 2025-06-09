@@ -1,4 +1,5 @@
 <Page class="recipe-add-page">
+  <Navbar title="Aggiungi Ricetta" />
   <Block class="recipe-add-page__block">
     <List strongIos outlineIos dividersIos>
       <Block>
@@ -58,28 +59,55 @@
         </ListItem>
       </Block>
       <Block>
-        <p>Ingredienti</p>
-        <Button outline onClick={addIngredientInput}>Aggiungi ingrediente</Button>
+      <p>Ingredienti</p>
+      <Button 
+        outline 
+        onClick={addIngredientInput}
+        disabled={$ingredients.length === ingredientInputs.filter(i => i.selectedIngredient).length}
+      >
+        Aggiungi ingrediente
+      </Button>
       </Block>
       <List form class="ing-list">
         {#each ingredientInputs as input (input.id)}
           <ListItem class="ingredient-item">
             <img src={input.cover ? input.cover : "https://cdn.framework7.io/placeholder/abstract-88x88-3.jpg"} alt class="ingredient-image"/>
             <div class="ingredient-details">
-              <!-- Ingridient name -->
+              {#if !input.selectedIngredient}
               <AutoComplete 
-              items={$ingredients.map(i => i.name)} 
-              bind:selectedItem={input.selectedIngredient}
-              on:selectedItemChange={(name) => updateIngredientName(input.id, name)}
+                items={$ingredients
+                  .map(i => i.name)
+                  .filter(name => !ingredientInputs.some(inp => inp.selectedIngredient === name))
+                }
+                bind:selectedItem={input.selectedIngredient}
+                on:selectedItemChange={(name) => updateIngredientName(input.id, name)}
+                placeholder="Aggiungi ingrediente..."
               />
-              <!-- Quantity -->
-              
+              {:else}
+                <div class="ingredient-selected" style="display: flex; align-items: center; gap: 12px;">
+                  <span class="ingredient-name">{input.selectedIngredient}</span>
+                  <span class="ingredient-quantity" style="min-width: 32px; text-align: center;">
+                    {input.quantity} g
+                  </span>
+                  <Stepper
+                    buttonsOnly={true}
+                    small
+                    raised
+                    min={1}
+                    max={600}
+                    step={1}
+                    value={input.quantity}
+                    on:stepperChange={(e) => updateIngredientQuantity(input.id, e)}
+                  />
+                </div>
+              {/if}
             </div>
             <Button fill color="red" onClick={() => removeIngredientInput(input.id)} class="remove-button">
               <Icon f7="trash"></Icon>
             </Button>
           </ListItem>
         {/each}
+
       </List>
       <datalist id="ingredientList">
         {#each $ingredients as ingredient}
@@ -91,7 +119,7 @@
 </Page>
 
 <script>
-  import { f7, Block, Page, List, ListItem, Stepper, TextEditor, ListInput, Button, Icon } from 'framework7-svelte';
+  import { f7, Block, Page, List, ListItem, Stepper, TextEditor, ListInput, Button, Icon, Navbar } from 'framework7-svelte';
   import { onMount, onDestroy } from 'svelte';
   import { category, ingredients } from '../js/store.js';
   import '../css/recipe-add.css';
@@ -155,55 +183,37 @@
   }
 
   let ingredientInputs = [];
-  let nextId = 0;
 
   function addIngredientInput() {
-  ingredientInputs = [...ingredientInputs, { 
-    id: nextId++, 
-    ingredient: '', 
-    quantity: '0.1 kg', 
-    cover: '', 
-    selectedIngredient: null
-  }];
-  createQuantityPicker(nextId - 1);
-}
-  function removeIngredientInput(id) {
-    ingredientInputs = ingredientInputs.filter(item => item.id !== id);
-    pickerModal[id].destroy();
+    ingredientInputs = [
+      ...ingredientInputs,
+      {
+        id: Date.now().toString(),
+        selectedIngredient: null,
+        quantity: 1, 
+      }
+    ];
   }
 
   function updateIngredientName(id, name) {
-  ingredientInputs = ingredientInputs.map(item => {
-    if (item.id === id) {
-      item.ingredient = name;
-      item.selectedIngredient = name;
-    }
-    return item;
-  });
-}
+    ingredientInputs = ingredientInputs.map(input =>
+      input.id === id
+        ? { ...input, selectedIngredient: name, quantity: 1 }
+        : input
+    );
+  }
 
+  function updateIngredientQuantity(id, event) {
+    const value = Array.isArray(event.detail) ? event.detail[0] : event.detail;
+    //console.log('ID:', id, 'Valore stepper:', value);
+    ingredientInputs = ingredientInputs.map(input =>
+      input.id === id
+        ? { ...input, quantity: Number(value) }
+        : input
+    );
+  }
 
-
-  function createQuantityPicker(index) {
-    const quantityOptions = Array.from({ length: 100 }, (_, i) => (i + 1) / 10); // Da 0.1 a 10 kg con incrementi di 0.1
-    const quantityValues = quantityOptions.map(value => ({ value: value.toFixed(1) + ' kg' }));
-
-    pickerModal[index] = f7.picker.create({
-      inputEl: `.picker-input-${ingredientInputs[index].id}`,
-      value: [quantityValues[0]], // Valore di default
-      rotateEffect: true,
-      formatValue: function (values) {
-        return values[0];
-      },
-      cols: [
-        {
-          textAlign: 'center',
-          values: quantityValues.map(option => option.value),
-        }
-      ],
-      onPickerChange: (picker, values) => {
-        ingredientInputs[index].quantity = values[0];
-      }
-    });
+  function removeIngredientInput(id) {
+    ingredientInputs = ingredientInputs.filter(input => input.id !== id);
   }
 </script>
