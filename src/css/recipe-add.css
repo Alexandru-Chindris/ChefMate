@@ -1,3 +1,82 @@
+@import url('https://fonts.googleapis.com/css2?family=Bree+Serif&family=Edu+QLD+Hand:wght@400..700&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap');
+
+.archivo-black-regular {
+  font-family: "Archivo Black", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+.cus-navbar{
+  padding:0px;
+
+}
+
+.cus-container{
+  margin: 0px;
+  padding: 0px;
+  background-color: inherit;
+}
+
+.page-content{
+  padding-top: 0px;
+}
+
+.cus-bg{
+  background-color: rgb(224, 224, 224);
+}
+
+.input-description{
+  width: 99%;
+  right: 1.6vh;
+}
+
+.space-between{
+  margin: 0px;
+  padding: 1.2vh;
+}
+
+/* Image Upload */
+.image-upload {
+  position: relative;
+  width: 100%;
+  height: auto;
+  overflow: hidden; 
+  max-height: 50vh;
+  top: 4.4%;
+}
+
+.add-image-btn {
+  position: absolute;
+  border-radius: 30px;
+  right: 16px;
+  bottom: 16px;
+  background: #ffffff76;
+  border: none;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.10);
+  width: 48px;
+  height: 48px;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.2s;
+} 
+
+.preview {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  border: 2px solid #ccc;
+}
+
+.add-image-btn:hover {
+  box-shadow: 0 2px 8px rgb(0, 0, 0);
+}
+
+.add-image-btn .material-icons {
+  font-size: 28px;
+  color: #3a3a3a;
+
+}
+
 .ingredient-item {
     width: 100%;
     display: flex;
@@ -44,4 +123,35 @@
   min-width: 32px;
   text-align: center;
   font-size: 15px;
+}
+
+.save-recipe-fixed-btn {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 100;
+  padding: 16px;
+  background: rgba(255,255,255,0.95);
+  box-shadow: 0 -2px 8px rgba(0,0,0,0.05);
+}
+
+.recipe-add-page__block{
+  padding-top: 0px;
+  padding: 0px;
+  margin-top: 0px;
+  margin-bottom: 0px;
+}
+
+.page-content{
+  padding-top: 0px;
+  padding: 0px;
+  padding-top: 2vh;
+}
+
+.page{
+  width: 100%;
+}
+html{
+ background-color: blue;
 }

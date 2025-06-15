@@ -1,28 +1,47 @@
-<Page class="recipe-add-page">
-  <Navbar title="Aggiungi Ricetta" />
-  <Block class="recipe-add-page__block">
+<Page class="cus-bg">
+  <div class="image-upload">
+    <img src={imageUrl || '../images/placeholders/default_image.png'} alt  class="preview" />
+    <button type="button" class="add-image-btn" on:click={handleImageClick} aria-label="Aggiungi foto">
+    <i class="material-icons">add_a_photo</i>
+    </button>
+    <input
+      id="imageInput"
+      type="file"
+      accept="image/*"
+      on:change={handleFileChange}
+      style="display: none;"
+      bind:this={fileInput}
+    />
+  </div>
+  <Navbar title="Aggiungi Ricetta" backLink class="archivo-black-regular cus-navbar" />
+  <Block class="cus-container">
     <List strongIos outlineIos dividersIos>
-      <Block>
-        <div class="recipe-add-page__recipe-name">Nome della ricetta</div>
+      <Block class="space-between">
+        <div>Nome della ricetta</div>
         <ListInput
           label="Nome"
           floatingLabel
           type="text"
           placeholder="Nome della tua ricetta"
           clearButton
+          bind:value={recipeName}
         />
       </Block>
       <Block>
-        <div class="recipe-add-page__recipe-name">Descrizione della ricetta</div>
+        <div>Descrizione della ricetta</div>
         <TextEditor
+          class="input-description"
+          dividers
+          resizable
           placeholder="Inserisci testo..."
           mode="popover"
           buttons={['bold', 'italic', 'underline', 'strikeThrough']}
           style="--f7-text-editor-height: 150px"
+          bind:value={recipeDescription}
         />
       </Block>
       <Block>
-        <div class="recipe-add-page__recipe-name">Categoria della ricetta</div>
+        <div>Categoria della ricetta</div>
         <div class="list list-strong-ios list-outline-ios">
           <li>
             <div class="item-content item-input">
@@ -68,11 +87,11 @@
         Aggiungi ingrediente
       </Button>
       </Block>
-      <List form class="ing-list">
+      <List form>
         {#each ingredientInputs as input (input.id)}
-          <ListItem class="ingredient-item">
+          <ListItem>
             <img src={input.cover ? input.cover : "https://cdn.framework7.io/placeholder/abstract-88x88-3.jpg"} alt class="ingredient-image"/>
-            <div class="ingredient-details">
+            <div>
               {#if !input.selectedIngredient}
               <AutoComplete 
                 items={$ingredients
@@ -84,9 +103,9 @@
                 placeholder="Aggiungi ingrediente..."
               />
               {:else}
-                <div class="ingredient-selected" style="display: flex; align-items: center; gap: 12px;">
-                  <span class="ingredient-name">{input.selectedIngredient}</span>
-                  <span class="ingredient-quantity" style="min-width: 32px; text-align: center;">
+                <div style="display: flex; align-items: center; gap: 12px;">
+                  <span>{input.selectedIngredient}</span>
+                  <span style="min-width: 32px; text-align: center;">
                     {input.quantity} g
                   </span>
                   <Stepper
@@ -102,7 +121,7 @@
                 </div>
               {/if}
             </div>
-            <Button fill color="red" onClick={() => removeIngredientInput(input.id)} class="remove-button">
+            <Button fill color="red" onClick={() => removeIngredientInput(input.id)}>
               <Icon f7="trash"></Icon>
             </Button>
           </ListItem>
@@ -115,6 +134,17 @@
         {/each}
       </datalist>
     </List>
+    <div>
+    <Button
+      fill
+      color={canSave ? 'blue' : 'gray'}
+      disabled={!canSave}
+      onClick={saveRecipe}
+      large
+    >
+      Salva ricetta
+    </Button>
+  </div>
   </Block>
 </Page>
 
@@ -123,37 +153,42 @@
   import { onMount, onDestroy } from 'svelte';
   import { category, ingredients } from '../js/store.js';
   import '../css/recipe-add.css';
-  import { createEventDispatcher } from 'svelte';
   import AutoComplete from "simple-svelte-autocomplete";
 
+  let recipeName = '';
+  let recipeDescription = '';
+  let recipeCategory = '';
   let pickerCategory;
   let pickerModal;
+  let userId = 'Deafult user';
+
+$: canSave = recipeName.trim().length > 0
+  && recipeCategory.trim().length > 0
+  && ingredientInputs.filter(i => i.selectedIngredient).length >= 2;
+
+  // Debug
+  //$: console.log('canSave:', canSave, recipeName, ingredientInputs);
+  //$: console.log('recipeCategory:', recipeCategory);
 
   onMount(() => {
     let categoryNames = [];
-
     category.subscribe(currentCategories => {
       categoryNames = currentCategories.map(item => item.name);
 
-      if (pickerCategory) {
-        pickerCategory.cols.replaceValues(categoryNames);
-      } else {
-        pickerCategory = f7.picker.create({
-          inputEl: '#demo-picker-category',
-          cols: [
-            {
-              textAlign: 'center',
-              values: categoryNames
+      if (pickerCategory) pickerCategory.destroy();
+      pickerCategory = f7.picker.create({
+        inputEl: '#demo-picker-category',
+        cols: [
+          {
+            textAlign: 'center',
+            values: categoryNames,
+            onChange: (picker, value) => {
+              recipeCategory = value[0];
             }
-          ]
-        });
-      }
+          }
+        ]
+      });
     });
-
-    const quantityOptions = Array.from({ length: 100 }, (_, i) => (i + 1) / 10);
-    const quantityValues = quantityOptions.map(value => ({ value: value.toFixed(1) + ' kg' }));
-
-    pickerModal = [];
   });
 
   onDestroy(() => {
@@ -216,4 +251,46 @@
   function removeIngredientInput(id) {
     ingredientInputs = ingredientInputs.filter(input => input.id !== id);
   }
+
+async function saveRecipe() {
+  const recipe = {
+    title: recipeName,
+    description: recipeDescription,
+    category: recipeCategory,
+    time: startingValue,
+    ingredients: ingredientInputs.map(i => ({
+      name: i.selectedIngredient,
+      quantity: i.quantity,
+      unit: 'g'
+    })),
+    author: userId // user id
+  };
+
+  const response = await fetch('http://localhost:5000/api/recipes', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(recipe)
+  });
+
+  if (response.ok) {
+    console.log("Connection OK");
+  }
+}
+
+// Image Upload
+let imageUrl = '';
+let fileInput = null;
+
+function handleFileChange(event) {
+  const file = event.target.files[0];
+  if (file) {
+    imageUrl = URL.createObjectURL(file);
+  }
+}
+
+function handleImageClick() {
+  if (fileInput) {
+    fileInput.click();
+  }
+}
 </script>

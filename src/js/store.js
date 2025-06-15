@@ -85,6 +85,10 @@ export let ingredients = writable([
   {
     name: "cheese",
     cover: "https://cdn.framework7.io/placeholder/abstract-88x88-3.jpg"
+  },
+  {
+    name: "palle_di_uomo",
+    cover: "https://cdn.framework7.io/placeholder/abstract-88x88-3.jpg"
   }
 ]);
 
