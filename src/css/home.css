@@ -22,6 +22,10 @@
     }
   }
 
+  .page-content{
+    padding-top: 0px !important;
+  }
+
   html,
   body,
   .demo-swiper-multiple,

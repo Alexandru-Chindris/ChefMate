@@ -160,7 +160,6 @@
   let recipeCategory = '';
   let pickerCategory;
   let pickerModal;
-  let userId = 'Deafult user';
 
 $: canSave = recipeName.trim().length > 0
   && recipeCategory.trim().length > 0
@@ -263,10 +262,10 @@ async function saveRecipe() {
       quantity: i.quantity,
       unit: 'g'
     })),
-    author: userId // user id
+    author: null //userId // user id
   };
 
-  const response = await fetch('http://localhost:5000/api/recipes', {
+  const response = await fetch('http://localhost:5000/recipes', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(recipe)

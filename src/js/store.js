@@ -87,7 +87,7 @@ export let ingredients = writable([
     cover: "https://cdn.framework7.io/placeholder/abstract-88x88-3.jpg"
   },
   {
-    name: "palle_di_uomo",
+    name: "spezie",
     cover: "https://cdn.framework7.io/placeholder/abstract-88x88-3.jpg"
   }
 ]);
