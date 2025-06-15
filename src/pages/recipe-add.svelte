@@ -262,7 +262,7 @@ async function saveRecipe() {
       quantity: i.quantity,
       unit: 'g'
     })),
-    author: null //userId // user id
+    //author: userId // user id
   };
 
   const response = await fetch('http://localhost:5000/recipes', {
@@ -272,7 +272,7 @@ async function saveRecipe() {
   });
 
   if (response.ok) {
-    console.log("Connection OK");
+    console.log("Request send");
   }
 }
 
