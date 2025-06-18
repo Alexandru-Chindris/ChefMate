@@ -102,7 +102,7 @@
               {:else}
               <Block class="correction">
                 {#if isLogin}
-                  <NavTitle title="👋 {greetUserByTime()}, {user.name}" hideOnPageScroll transparent class="navbar bree-serif-regular"></NavTitle>
+                  <NavTitle title="👋 {greetUserByTime()}, {$user.name}" hideOnPageScroll transparent class="navbar bree-serif-regular"></NavTitle>
                 {:else}
                   <NavTitle title="👋 {greetUserByTime()}" hideOnPageScroll transparent class="navbar bree-serif-regular"></NavTitle>
                 {/if}
@@ -213,15 +213,15 @@
                 </Segmented>
                 {#if activeStrongButton == 0}
                 <div class="profile-container">
-                  <img src={user.profilePicture} alt class="profile-picture" />
-                  <h2 class="username">@{user.username}</h2>
-                  <p class="bio">{user.bio}</p>               
+                  <img src={$user.profilePicture} alt class="profile-picture" />
+                  <h2 class="username">{$user.username}</h2>
+                  <p class="bio">{$user.bio}</p>               
                   <div class="recipes-section">
                     <h3 class="recipes-title">Your Recipes</h3>
                       <Fab position="center-bottom" text="Create" on:click={() => toRecipe()}>
                         <Icon f7="plus" md="material:plus"/>
                       </Fab>
-                    {#if user.recipes.length > 0}
+                    {#if user && user.recipes && user.recipes.length > 0}
                       <div class="recipes-container">
                         {#each user.recipes as recipe}
                           <div class="recipe-card">
@@ -272,7 +272,7 @@
               </div>
             </Block>
         {:else}
-          <Block class="container-notlogged">
+<!--           <Block class="container-notlogged">
             <LoginScreenTitle>Login</LoginScreenTitle>
               <List form>
                 <ListInput
@@ -300,7 +300,11 @@
               <div class="link">
                 <a href on:click={toRegister}><p class="register-text">Are you new? Create an account today!</p></a>
               </div>
-          </Block>        
+          </Block>  --> 
+            <Button onClick={loginWithGoogle}>
+              <Icon f7="google" />
+              Accedi con Google
+            </Button> 
         {/if}
       </Tab>
     </Tabs>
@@ -309,31 +313,16 @@
 import {Page, Block, f7, Tabs, Tab, Toolbar, Link, NavTitle, List, ListItem, Icon, Card, Navbar, Searchbar, Subnavbar, Popup, Segmented, Button, Fab, LoginScreenTitle, ListButton, ListInput} from 'framework7-svelte';
 import '../css/mainView.css';
 import Feed from '../pages/feed.svelte';
-import { createEventDispatcher } from 'svelte';
 import { category } from '../js/store.js';
+import { auth, provider } from '../js/firebaseConfig.js';
+import { signInWithPopup } from "firebase/auth";
+import { user } from '../js/store.js';
 
+const API_URL = "http://localhost:5000";
 $: categoryValue = $category;
 
 // Profile page
 let activeStrongButton = 0;
-
-// user db
-let user = {
-    name: "Ludovica",
-    email: "ludovica@gmail.com",
-    profilePicture: "../images/profile/user-template.jpg",
-    username: "username",
-    bio: "Love to cook, love life. I'm good in the kitchen, and i like dogs.",
-    recipes: [
-      { id: 1, title: "Pasta al pomodoro", image: "../images/images/IMG_0819-843347201.jpg"},
-      { id: 2, title: "Spaghetti di Ludo", image: "../images/images/spaghetti_ludo.jpg" },
-      { id: 3, title: "Elemento 3", image: "https://cdn.framework7.io/placeholder/abstract-88x88-3.jpg" },
-      { id: 4, title: "Pasta al pomodoro", image: "../images/images/IMG_0819-843347201.jpg" },
-      { id: 5, title: "Spaghetti di Ludo", image: "../images/images/spaghetti_ludo.jpg" },
-      { id: 6, title: "Elemento 3", image: "https://cdn.framework7.io/placeholder/abstract-88x88-3.jpg" },
-      { id: 4, title: "Pasta al pomodoro", image: "../images/images/IMG_0819-843347201.jpg" },
-    ]
-};
 
 function toRecipe(){
   f7.views.main.router.navigate('/recipe-add/');
@@ -342,30 +331,11 @@ function toRecipe(){
 function toRegister(){
   f7.views.main.router.navigate('/register_user_form/');
 }
+
 // Login/Register start
-let email = '';
-let password = '';
-let isLogin = true; // default false
+let isLogin = false; // default false
 
-const dispatch = createEventDispatcher();
-
-function handleSubmit() {
-    if (isLogin) {
-      f7.dialog.alert(`Email: ${email}<br>Password: ${password}`, () => {
-        // Simulate successful login
-        dispatch('loginSuccess', { email });
-      });
-    } else {
-      f7.dialog.alert(`Signup with Email: ${email}<br>Password: ${password}`, () => {
-        // Simulate successful signup
-        dispatch('signupSuccess', { email });
-        // Toggle back to login after signup
-        /* isLogin = true; */
-      });
-    }
-}
 // Login/Register end
-
 let items = [
   {
     title: 'Carbonara',
@@ -698,4 +668,38 @@ function greetUserByTime() {
   let effect = "fade";
 /* Reloading effects end */
 /* Pull to refresh end */
+
+// Login with Google Firebase
+async function loginWithGoogle() {
+  try {
+    const result = await signInWithPopup(auth, provider);
+    const firebaseUser = result.user;
+    const userData = {
+      name: firebaseUser.displayName,
+      email: firebaseUser.email,
+      profilePicture: firebaseUser.photoURL,
+      username: firebaseUser.email.split('@')[0],
+      bio: "",
+      recipes: []
+    };
+    const idToken = await firebaseUser.getIdToken();
+    const response = await fetch(`${API_URL}/api/auth/google`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ idToken, ...userData })
+    });
+    const dbUser = await response.json();
+    //console.log("Backend response:", dbUser);
+    user.set({
+      username: dbUser.username,
+      name: dbUser.name,
+      profilePicture: dbUser.profilePicture,
+      bio: dbUser.bio,
+      recipes: dbUser.recipes || []
+    });
+    isLogin = true;
+  } catch (error) {
+    console.error("Internal application error:", error);
+  }
+}
 </script>

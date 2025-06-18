@@ -92,4 +92,6 @@ export let ingredients = writable([
   }
 ]);
 
+export const user = writable(null);
+
 export default store;
