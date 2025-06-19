@@ -1,7 +1,7 @@
 <Page ptr ptrMousewheel={true} onPtrRefresh={loadMore} class="main-page">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Bree+Serif&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bree+Serif&family=Lato:wght@400;700&display=swap" rel="stylesheet">
 <Popup opened={showPopup} onPopupClosed={closeRecipeModal}>
   <Page class="container-detail">
     <Navbar title={selectedRecipe ? selectedRecipe.title : 'Page not found'} class="detail-navbar">
@@ -72,11 +72,11 @@
   </Page>
 </Popup>
   <Toolbar tabbar icons position={"bottom"}>
-    <Link tabLink="#tab-1" tabLinkActive text="Home" iconIos="f7:house" iconMd="material:home"/>
-    <Link tabLink="#tab-2" text="Discover" iconIos="f7:search" iconMd="material:search" />
-    <Link tabLink="#tab-3" text="Profile" iconIos="f7:person" iconMd="material:group"/>
+    <Link tabLink="#tab-1" tabLinkActive iconIos="f7:house" iconMd="material:home"/>
+    <Link tabLink="#tab-2" iconIos="f7:search" iconMd="material:search" />
+    <Link tabLink="#tab-3" iconIos="f7:person" iconMd="material:group"/>
   </Toolbar>
-    <Tabs animated>
+    <Tabs animated swipeable>
       <Tab id="tab-1" class="page-content" tabActive>
           {#if loading} <!-- loading default -->
             <List strongIos outlineIos dividersIos mediaList v-if="loading">
@@ -100,19 +100,66 @@
               {/each}
             </List>
               {:else}
-              <Block class="correction">
                 {#if isLogin}
-                  <NavTitle title="👋 {greetUserByTime()}, {$user.name}" hideOnPageScroll transparent class="navbar bree-serif-regular"></NavTitle>
+                <Block class="main-container">
+                  <div class="header-row">
+                    <div class="greeting-col">
+                      <NavTitle
+                        title="{greetUserByTime()},"
+                        hideOnPageScroll
+                        transparent
+                        class="navbar bree-serif-regular greeting-main"
+                      />
+                      <Block class="username-style">{$user.name}</Block>
+                    </div>
+                    <div class="icon-buttons-row">
+                      <Button class="icon-circle" small round fill>
+                        <Icon f7="cart" size="3vh" />
+                      </Button>
+                      <Button class="icon-circle" small round fill>
+                        <Icon f7="book" size="3vh" />
+                      </Button>
+                    </div>
+                  </div>
+                </Block>
                 {:else}
-                  <NavTitle title="👋 {greetUserByTime()}" hideOnPageScroll transparent class="navbar bree-serif-regular"></NavTitle>
+                <Block class="main-container">
+                  <div class="header-row">
+                    <NavTitle title="{greetUserByTime()}" hideOnPageScroll transparent class="navbar bree-serif-regular"></NavTitle>
+                    <div class="icon-buttons-row">
+                      <Button class="icon-circle" small round fill>
+                        <Icon f7="cart" size="3vh"/>
+                      </Button>
+                      <Button class="icon-circle" small round fill>
+                        <Icon f7="book" size="3vh"/>
+                      </Button>
+                    </div>
+                  </div>
+                </Block>
                 {/if}
-                <p class="subtitle-today lato">Today's recipe</p>
+                <Block>
+                <p class="subtitle-today open-sans-font">Today's recipe</p>
                 <a on:click={() => openRecipeModal(today_selection)} href>
                   <Card class="today-recipe-correction" style="--today-pic: url({today_selection.cover});">
-                    <p class="cus-today">{today_selection.title}</p>
                   </Card>
+                  <div class="today-row">
+                    <span class="cus-today">{today_selection.title}</span>
+                    <span class="cus-today-author pacifico-regular">{today_selection.author}</span>
+                  </div>
                 </a>
-                <p class="subtitle lato">Recipe that you would love</p>
+                <p class="subtitle lato">Explore by categories!</p>
+                <div class="categories-container">
+                  <swiper-container pagination class="demo-swiper-multiple cus-space" space-between="1" slides-per-view="4">
+                    {#each categoryValue as item}
+                       <swiper-slide class="catogory-container">
+                        <div class="rounded-container">
+                          <div class="category-icon">{item.icon}</div>
+                        </div>
+                       </swiper-slide>
+                    {/each}
+                  </swiper-container>
+                </div>
+                <p class="subtitle lato">Trending recipes</p>
                 <swiper-container pagination class="demo-swiper-multiple" space-between="10" slides-per-view="auto">
                   {#each items as item, index (index)}
                     <swiper-slide>
@@ -123,42 +170,34 @@
                         <div class="card-content" >
                           <div class="card-stats">
                             <span class="stat">
-                              <p><Icon f7="heart_circle" size="22px"/></p>
+                              <p><Icon f7="eye" size="22px"/></p>
                               {item.views}
                             </span>
                             <span class="stat">
                               <p><Icon f7="hand_thumbsup" size="22px"/></p>{item.likes}
                             </span>
                           </div>
-                          <p class="card-title">{item.title}</p>
                         </div>
                       </div>
                     </swiper-slide>
                   {/each}
                 </swiper-container>
-                <p class="subtitle lato">Categories</p>
-                <div class="categories-container">
-                  <swiper-container pagination class="demo-swiper-multiple" space-between="1" slides-per-view="4">
-                    {#each categoryValue as item}
-                       <swiper-slide class="catogory-container">
-                        <div class="rounded-container">
-                          <div class="category-name">{item.icon} <br>{item.name}</div>
-                        </div>
-                       </swiper-slide>
-                    {/each}
-                  </swiper-container>
-                </div>
-                <p>Feed</p>
-                <div class="block">
-                  <!-- should be sorted-items in for each , missing sorting algorithm -->
-                  {#each items as item (item.title)}
-                    <Feed item={item} user={user} cate={categoryValue}/>
-                  {/each}
-                </div>
+                <Block class="promo-container">
+                  <div class="promo-content">
+                    <img src="../images/images/promo_image.png" alt class="promo-img" />
+                    <div class="promo-text">Sign up, publish and share recipes</div>
+                  </div>
+                </Block>
               </Block>
           {/if}
       </Tab>
       <Tab id="tab-2" class="page-content">
+<!--         <p>Feed</p>
+        <div class="block">
+          {#each items as item (item.title)}
+            <Feed item={item} user={user} cate={categoryValue}/>
+          {/each}
+        </div> -->
         <Block class="correction-tab2">
           <Navbar title="Search">
             <Subnavbar inner={true} class="subnav">
@@ -272,45 +311,22 @@
               </div>
             </Block>
         {:else}
-<!--           <Block class="container-notlogged">
-            <LoginScreenTitle>Login</LoginScreenTitle>
-              <List form>
-                <ListInput
-                outline
-                label="E-mail"
-                floatingLabel
-                type="email"
-                value={email}
-                placeholder="Your e-mail"
-                onInput={(e) => email = e.target.value}
-                clearButton
-                />
-                <ListInput
-                  outline
-                  label="Password"
-                  floatingLabel
-                  type="password"
-                  value={password}
-                  placeholder="Your password"
-                  onInput={(e) => password = e.target.value}
-                  clearButton
-                />
-                <ListButton onClick={handleSubmit}>Continue</ListButton>
-              </List>
-              <div class="link">
-                <a href on:click={toRegister}><p class="register-text">Are you new? Create an account today!</p></a>
-              </div>
-          </Block>  --> 
-            <Button onClick={loginWithGoogle}>
-              <Icon f7="google" />
-              Accedi con Google
-            </Button> 
+        <div class="login-container">
+          <div class="container-box">
+            <img class="chef-img" src="../images/components/login_suggestion.png" alt="Chef" />
+            <div class="login-title">Jump in! Your kitchen awaits!</div>
+            <button class="google-sign-in-button" on:click={loginWithGoogle}>
+              <img class="google-icon" src="../images/google_icon.png" alt="Google logo" />
+              <span class="container-login-text">Accedi con Google</span>
+            </button>
+          </div>
+        </div>
         {/if}
       </Tab>
     </Tabs>
 </Page>
 <script>
-import {Page, Block, f7, Tabs, Tab, Toolbar, Link, NavTitle, List, ListItem, Icon, Card, Navbar, Searchbar, Subnavbar, Popup, Segmented, Button, Fab, LoginScreenTitle, ListButton, ListInput} from 'framework7-svelte';
+import {Page, Block, f7, Tabs, Tab, Toolbar, Link, NavTitle, List, ListItem, Icon, Card, Navbar, Searchbar, Subnavbar, Popup, Segmented, Button, Fab} from 'framework7-svelte';
 import '../css/mainView.css';
 import Feed from '../pages/feed.svelte';
 import { category } from '../js/store.js';
@@ -328,12 +344,8 @@ function toRecipe(){
   f7.views.main.router.navigate('/recipe-add/');
 }
 
-function toRegister(){
-  f7.views.main.router.navigate('/register_user_form/');
-}
-
 // Login/Register start
-let isLogin = false; // default false
+let isLogin = false ; // default false
 
 // Login/Register end
 let items = [
@@ -604,7 +616,7 @@ let items = [
   },
 ];
 
-/* Random Day Recipe start */
+// Random recipe
 let randomValue = null;
 let lastUpdateDate = null;
 
@@ -622,9 +634,7 @@ function updateRandomValue() {
 updateRandomValue();
 let today_selection = items[randomValue];
 
-/* Random Day Recipe end*/
-
-/* Recipe Popup View start */
+// Recipe Popup
 let selectedRecipe = null;
 let showPopup = false;
 
@@ -637,22 +647,23 @@ function closeRecipeModal() {
   showPopup = false;
   selectedRecipe = null;
 }
-/* Recipe Popup View end */
 
 function greetUserByTime() {
   const now = new Date();
   const currentHour = now.getHours();
 
   if (currentHour >= 0 && currentHour < 12) {
-    return "Good morning";
+    return "☀️ Good morning";
   } else if (currentHour >= 12 && currentHour < 18) {
-    return "Good afternoon";
+    return "👋 Good afternoon";
   } else if (currentHour >= 18 && currentHour < 22) {
-    return "Good evening";
+    return "🌆 Good evening";
+  } else {
+    return "😴 Good night";
   }
 }
 
-/* Pull to refresh start */
+// Pull to refresh
   function loadMore(done) {
     setTimeout(() => {
         loading = true;
@@ -663,11 +674,9 @@ function greetUserByTime() {
     }, 1000);
   } 
 
-/* Reloading effects start */
+// Reloading effects
   let loading = false;
   let effect = "fade";
-/* Reloading effects end */
-/* Pull to refresh end */
 
 // Login with Google Firebase
 async function loginWithGoogle() {
