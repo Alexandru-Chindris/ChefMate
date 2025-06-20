@@ -10,8 +10,9 @@ import RecipeAdd from "../pages/recipe-add.svelte";
 
 var routes = [
   {
+    name: 'Main',
     path: '/',
-    component: MainView, // Default: HomePage
+    component: HomePage, // Default: HomePage
   },
   {
     name: 'Debug',

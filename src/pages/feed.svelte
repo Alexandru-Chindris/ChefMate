@@ -68,7 +68,7 @@
       <div class="category-container">
         {categoryIcon}{item.category}
       </div>
-      <h2>{item.title}</h2>
+      <h2 class="item-title">{item.title}</h2>
       <p class="description">
         {item.description ? item.description.substring(0, 100) : 'No description available.'}
       </p>

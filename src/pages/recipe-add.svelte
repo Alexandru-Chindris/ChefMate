@@ -154,6 +154,7 @@
   import { category, ingredients } from '../js/store.js';
   import '../css/recipe-add.css';
   import AutoComplete from "simple-svelte-autocomplete";
+  import { user } from '../js/store.js';
 
   let recipeName = '';
   let recipeDescription = '';
@@ -252,6 +253,8 @@ $: canSave = recipeName.trim().length > 0
   }
 
 async function saveRecipe() {
+  const userId = $user?._id;
+
   const recipe = {
     title: recipeName,
     description: recipeDescription,
@@ -262,7 +265,7 @@ async function saveRecipe() {
       quantity: i.quantity,
       unit: 'g'
     })),
-    //author: userId // user id
+    author: userId
   };
 
   const response = await fetch('http://localhost:5000/recipes', {
@@ -273,6 +276,7 @@ async function saveRecipe() {
 
   if (response.ok) {
     console.log("Request send");
+    f7.views.main.router.navigate('/');
   }
 }
 

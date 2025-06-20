@@ -78,7 +78,7 @@
   </Toolbar>
     <Tabs animated swipeable>
       <Tab id="tab-1" class="page-content" tabActive>
-          {#if loading} <!-- loading default -->
+          {#if loading}
             <List strongIos outlineIos dividersIos mediaList v-if="loading">
               {#each items as n, index (index)}
                 <Block class="skeleton-correction">
@@ -192,44 +192,21 @@
           {/if}
       </Tab>
       <Tab id="tab-2" class="page-content">
-<!--         <p>Feed</p>
-        <div class="block">
-          {#each items as item (item.title)}
-            <Feed item={item} user={user} cate={categoryValue}/>
-          {/each}
-        </div> -->
+        <Navbar title="Search">
+          <Subnavbar inner={true} class="subnav">
+            <div class="searchbar-container">
+              <Searchbar searchContainer=".search-list" searchIn=".item-title" />
+            </div>
+          </Subnavbar>
+        </Navbar>
         <Block class="correction-tab2">
-          <Navbar title="Search">
-            <Subnavbar inner={true} class="subnav">
-              <div class="searchbar-container">
-                <Searchbar searchContainer=".search-list" searchIn=".item-title" />
-              </div>
-            </Subnavbar>
-          </Navbar>
-      
           <List strongIos outlineIos dividersIos class="searchbar-not-found">
             <ListItem title="Nothing found" />
           </List>
-      
           <List strongIos outlineIos dividersIos class="list-content search-list searchbar-found">
             {#each items as item, index (index)}
               <ListItem>
-                <div slot="media" class="image-container">
-                  <a on:click={() => openRecipeModal(item)} href>
-                    <img src={item.cover} alt={item.title} class="list-item-image" />
-                  </a>
-                </div>
-                <div slot="title" class="list-item-content">
-                  <div class="item-title">{item.title}</div>
-                  <div class="item-stats">
-                    <span class="stat">
-                      <Icon f7="heart_circle" size="16px" /> {item.views}
-                    </span>
-                    <span class="stat">
-                      <Icon f7="hand_thumbsup" size="16px" /> {item.likes}
-                    </span>
-                  </div>
-                </div>
+                <Feed item={item} user={user} cate={categoryValue}/>
               </ListItem>
             {/each}
           </List>
@@ -237,96 +214,72 @@
       </Tab>
       <Tab id="tab-3" class="page-content">
           {#if isLogin}
-            <Block class="correction">
-              <div class="extra-ios-space">
-                <Segmented strong tag="p">
-                  <Button active={activeStrongButton === 0} onClick={() => (activeStrongButton = 0)}>
-                    Profile
-                  </Button>
-                  <Button active={activeStrongButton === 1} onClick={() => (activeStrongButton = 1)}>
-                    Favorites
-                  </Button>
-                  <Button active={activeStrongButton === 2} onClick={() => (activeStrongButton = 2)}>
-                    Settings
-                  </Button>
-                </Segmented>
-                {#if activeStrongButton == 0}
-                <div class="profile-container">
-                  <img src={$user.profilePicture} alt class="profile-picture" />
-                  <h2 class="username">{$user.username}</h2>
-                  <p class="bio">{$user.bio}</p>               
-                  <div class="recipes-section">
-                    <h3 class="recipes-title">Your Recipes</h3>
-                      <Fab position="center-bottom" text="Create" on:click={() => toRecipe()}>
-                        <Icon f7="plus" md="material:plus"/>
-                      </Fab>
-                    {#if user && user.recipes && user.recipes.length > 0}
-                      <div class="recipes-container">
-                        {#each user.recipes as recipe}
-                          <div class="recipe-card">
-                            <img src={recipe.image} alt={recipe.title} />
-                          </div>
-                        {/each}
-                      </div>
-                    {:else}
-                      <p class="no-recipes-message">No recipe still!</p>
-                    {/if}
-                  </div>
+            <div class="profile-box">
+              <!-- svelte-ignore a11y-no-noninteractive-tabindex -->
+              <!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
+              <div class="profile-header">
+                <img src="../images/components/hat.png" alt class="chef-hat" />
+                <div class="profile-avatar-wrapper">
+                  <img src={$user.profilePicture} alt="Avatar utente" class="profile-avatar"/>
                 </div>
-              {/if}
-              {#if activeStrongButton == 1}
-                <div class="container-fav">
-                  <h1 class="title-fav">Favorites</h1>
-                  <p class="paragraph-fav">You don't have any favorites yet</p>
-                  <p class="paragraph-fav">When viewing a recipe, press the favorite icon <Icon f7="bookmark"/> to add it</p>
-                </div>
-                {/if}
-                {#if activeStrongButton == 2}
-                  <h1 class="title-settings">Settings</h1>
-                  <div class="container-settings">
-                    <List dividersIos simpleList strong outline>
-                      <a href>
-                        <ListItem title="Personal Information">
-                          <Icon f7="chevron_right" color="black" />
-                        </ListItem>
-                      </a>
-                      <a href>
-                        <ListItem title="Security">
-                          <Icon f7="chevron_right" color="black"/>
-                        </ListItem>
-                      </a>
-                      <a href>
-                        <ListItem title="Account Preferences">
-                          <Icon f7="chevron_right" color="black"/>
-                        </ListItem>
-                      </a>
-                      <a href>
-                        <ListItem title="Advanced Settings">
-                          <Icon f7="chevron_right" color="black"/>
-                        </ListItem>
-                      </a>
-                    </List>
-                  </div>
-                {/if}
+                <!-- svelte-ignore a11y-click-events-have-key-events -->
+                <!-- svelte-ignore a11y-no-noninteractive-tabindex -->
+                <img src="../images/components/exit_button.png" alt class="profile-close-img" on:click={closeProfile} tabindex="0" style="cursor:pointer;"/>
               </div>
-            </Block>
-        {:else}
-        <div class="login-container">
-          <div class="container-box">
-            <img class="chef-img" src="../images/components/login_suggestion.png" alt="Chef" />
-            <div class="login-title">Jump in! Your kitchen awaits!</div>
-            <button class="google-sign-in-button" on:click={loginWithGoogle}>
-              <img class="google-icon" src="../images/google_icon.png" alt="Google logo" />
-              <span class="container-login-text">Accedi con Google</span>
-            </button>
+              <div class="profile-info">
+                <span class="profile-username">{$user.username}</span>
+                <div class="profile-stats">
+                  <span>{$user.views}</span>
+                  <i class="f7-icons">eye</i>
+                  <span>{$user.likes}</span>
+                  <i class="f7-icons">hand_thumbsup</i>
+                </div>
+              </div>
+              <div class="profile-actions">
+                <button class="profile-btn" on:click={toRecipe}>Crea</button>
+                <button class="profile-btn" on:click={toSaved}>Salvati</button>
+              </div>
+              <hr class="profile-divider" />
+                <div class="profile-recipes-grid">
+                  {#if $user.recipes && $user.recipes.length > 0}
+                    <!-- svelte-ignore a11y-click-events-have-key-events -->
+                    <!-- svelte-ignore a11y-click-events-have-key-events -->
+                    <!-- svelte-ignore a11y-no-noninteractive-tabindex -->
+                    {#each $user.recipes as recipe, i (recipe._id || i)}
+                      <!-- svelte-ignore a11y-no-static-element-interactions -->
+                      <div class="recipe-card" on:click={() => openRecipeModal(recipe)} tabindex="0" aria-label={"Apri ricetta " + recipe.title}>
+                        <div class="recipe-image-wrapper">
+                          <img
+                            src={recipe.cover || recipe.image || '../images/placeholders/default_image.png'}
+                            alt={recipe.title}
+                            class="recipe-card-image"
+                          />
+                        </div>
+                        <div class="recipe-title">{recipe.title}</div>
+                      </div>
+                    {/each}
+                  {:else}
+                    <div class="profile-empty-message">Non hai ancora condiviso nessuna ricetta</div>
+                  {/if}
+                </div>
+              </div>
+            {:else}
+          <div class="login-container">
+            <div class="container-box">
+              <img class="chef-img" src="../images/components/login_suggestion.png" alt="Chef" />
+              <div class="login-title">Jump in! Your kitchen awaits!</div>
+              <button class="google-sign-in-button" on:click={loginWithGoogle}>
+                <img class="google-icon" src="../images/google_icon.png" alt="Google logo" />
+                <span class="container-login-text">Accedi con Google</span>
+              </button>
+            </div>
           </div>
-        </div>
         {/if}
       </Tab>
     </Tabs>
 </Page>
 <script>
-import {Page, Block, f7, Tabs, Tab, Toolbar, Link, NavTitle, List, ListItem, Icon, Card, Navbar, Searchbar, Subnavbar, Popup, Segmented, Button, Fab} from 'framework7-svelte';
+import {Page, Block, f7, Tabs, Tab, Toolbar, Link, NavTitle, List, ListItem, Icon, Card, Navbar, Searchbar, Subnavbar, Popup, Button} from 'framework7-svelte';
 import '../css/mainView.css';
 import Feed from '../pages/feed.svelte';
 import { category } from '../js/store.js';
@@ -338,7 +291,13 @@ const API_URL = "http://localhost:5000";
 $: categoryValue = $category;
 
 // Profile page
-let activeStrongButton = 0;
+function closeProfile() {
+  alert("Chiudi profilo (dummy function)");
+}
+
+function toSaved() {
+  alert("Vai ai salvati (dummy function)");
+}
 
 function toRecipe(){
   f7.views.main.router.navigate('/recipe-add/');
@@ -639,7 +598,21 @@ let selectedRecipe = null;
 let showPopup = false;
 
 function openRecipeModal(item) {
-  selectedRecipe = item;
+  selectedRecipe = {
+    ...item,
+    ingridients: item.ingridients || item.ingredients || [],
+    cover: item.cover || item.image || '../images/placeholders/default_image.png',
+    author: (typeof item.author === 'object' && item.author)
+      ? (item.author.username || item.author.name || '')
+      : '',
+    serving: item.serving ?? item.servings ?? '',
+    minutes: item.minutes ?? '',
+    views: item.views ?? 0,
+    likes: item.likes ?? 0,
+    category: item.category || 'Default Category',
+    description: item.description || '',
+    title: item.title || '',
+  };
   showPopup = true;
 }
 
@@ -700,6 +673,7 @@ async function loginWithGoogle() {
     const dbUser = await response.json();
     //console.log("Backend response:", dbUser);
     user.set({
+      _id: dbUser._id,
       username: dbUser.username,
       name: dbUser.name,
       profilePicture: dbUser.profilePicture,
