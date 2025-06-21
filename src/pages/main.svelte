@@ -9,10 +9,10 @@
       <Link slot="nav-right"><Icon f7="heart" /></Link>
     </Navbar>
     <Block class="detail-main-border">
-      {#if selectedRecipe && selectedRecipe.ingridients}
+      {#if selectedRecipe && selectedRecipe.ingredients}
         <Block>
           <div class="detail-img-container" style="--selectedRecipe-cover: url({selectedRecipe.cover});">
-            <img src={selectedRecipe.cover} alt={selectedRecipe.title}/>
+            <img src={selectedRecipe.cover} alt/>
           </div>
           <div class="recipe-info">
             <h3>{selectedRecipe.title}</h3>
@@ -28,7 +28,7 @@
               </div>
               <div class="detail-post-item">
                 <Icon f7="person" size="17px" />
-                <span> {selectedRecipe.author}</span>
+                <span>{selectedRecipe.author || 'Autore sconosciuto'}</span>
               </div>
             </div>
           </div>
@@ -52,9 +52,9 @@
           </div>
           <h3>Ingredients</h3>
           <div class="detail-recipe-components">
-            {#each selectedRecipe.ingridients as item}
+            {#each selectedRecipe.ingredients as item}
               <div class="detail-recipe-components-item">
-                <img src={item.cover} alt={item.name} />
+                <img src={item.cover} alt/>
                 <div class="detail-recipe-components-item-text">
                   <span>{item.name}</span>
                   <span>{item.kg}</span>
@@ -137,61 +137,73 @@
                   </div>
                 </Block>
                 {/if}
-                <Block>
-                <p class="subtitle-today open-sans-font">Today's recipe</p>
-                <a on:click={() => openRecipeModal(today_selection)} href>
-                  <Card class="today-recipe-correction" style="--today-pic: url({today_selection.cover});">
-                  </Card>
-                  <div class="today-row">
-                    <span class="cus-today">{today_selection.title}</span>
-                    <span class="cus-today-author pacifico-regular">{today_selection.author}</span>
-                  </div>
-                </a>
-                <p class="subtitle lato">Explore by categories!</p>
-                <div class="categories-container">
-                  <swiper-container pagination class="demo-swiper-multiple cus-space" space-between="1" slides-per-view="4">
-                    {#each categoryValue as item}
-                       <swiper-slide class="catogory-container">
-                        <div class="rounded-container">
-                          <div class="category-icon">{item.icon}</div>
+                {#if items.length > 0}
+                  <Block>
+                    {#if today_selection}
+                      <p class="subtitle-today open-sans-font">Today's recipe</p>
+                      <a on:click={() => openRecipeModal(today_selection)} href>
+                          <Card class="today-recipe-correction" style="--today-pic: url({today_selection.cover && !today_selection.cover.startsWith('http') ? 'http://localhost:5000' + today_selection.cover : (today_selection.cover || '../images/placeholders/default_image.png')});">
+                        </Card>
+                        <div class="today-row">
+                          <span class="cus-today">{today_selection.title}</span>
+                          <span class="cus-today-author pacifico-regular">{today_selection.author}</span>
                         </div>
-                       </swiper-slide>
-                    {/each}
-                  </swiper-container>
-                </div>
-                <p class="subtitle lato">Trending recipes</p>
-                <swiper-container pagination class="demo-swiper-multiple" space-between="10" slides-per-view="auto">
-                  {#each items as item, index (index)}
-                    <swiper-slide>
-                      <div class="single-card" >
-                        <a on:click={() => openRecipeModal(item)} href>
-                          <img class="card-image" src={item.cover} alt=""/>
-                        </a>
-                        <div class="card-content" >
-                          <div class="card-stats">
-                            <span class="stat">
-                              <p><Icon f7="eye" size="22px"/></p>
-                              {item.views}
-                            </span>
-                            <span class="stat">
-                              <p><Icon f7="hand_thumbsup" size="22px"/></p>{item.likes}
-                            </span>
+                      </a>
+                    {/if}
+                    <p class="subtitle lato">Explore by categories!</p>
+                    <div class="categories-container">
+                      <swiper-container pagination class="demo-swiper-multiple cus-space" space-between="1" slides-per-view="4">
+                        {#each categoryValue as item}
+                          <swiper-slide class="catogory-container">
+                            <div class="rounded-container">
+                              <div class="category-icon">{item.icon}</div>
+                            </div>
+                          </swiper-slide>
+                        {/each}
+                      </swiper-container>
+                    </div>
+                    <p class="subtitle lato">Trending recipes</p>
+                    <swiper-container pagination class="demo-swiper-multiple" space-between="10" slides-per-view="auto">
+                      {#each items as item, index (index)}
+                        <swiper-slide>
+                          <div class="single-card" >
+                            <a on:click={() => openRecipeModal(item)} href>
+                              <img class="card-image" src={item.cover && !item.cover.startsWith('http') ? "http://localhost:5000" + item.cover : (item.cover || '../images/placeholders/default_image.png')} alt/>
+                            </a>
+                            <div class="card-content" >
+                              <div class="card-stats">
+                                <span class="stat">
+                                  <p><Icon f7="eye" size="22px"/></p>
+                                  {item.views}
+                                </span>
+                                <span class="stat">
+                                  <p><Icon f7="hand_thumbsup" size="22px"/></p>{item.likes}
+                                </span>
+                              </div>
+                            </div>
                           </div>
-                        </div>
+                        </swiper-slide>
+                      {/each}
+                    </swiper-container>
+                    <Block class="promo-container">
+                      <div class="promo-content">
+                        <img src="../images/images/promo_image.png" alt class="promo-img"/>
+                        <div class="promo-text">Sign up, publish and share recipes</div>
                       </div>
-                    </swiper-slide>
-                  {/each}
-                </swiper-container>
-                <Block class="promo-container">
-                  <div class="promo-content">
-                    <img src="../images/images/promo_image.png" alt class="promo-img" />
-                    <div class="promo-text">Sign up, publish and share recipes</div>
-                  </div>
-                </Block>
-              </Block>
+                    </Block>
+                  </Block>
+                {:else}
+                  <Block class="empty-message">
+                    <div class="empty-content">
+                      <img src="../images/network_problems.png" alt class="empty-img"/>
+                      <p class="no-recipes-message">Unable to load data. Check your connection and try again.</p>
+                    </div>
+                  </Block>
+              {/if}
           {/if}
       </Tab>
       <Tab id="tab-2" class="page-content">
+        {#if items.length > 0}
         <Navbar title="Search">
           <Subnavbar inner={true} class="subnav">
             <div class="searchbar-container">
@@ -211,6 +223,14 @@
             {/each}
           </List>
         </Block>
+        {:else}
+          <Block class="centered-error-block">
+            <div class="centered-error-content">
+              <img src="../images/worried_chef.png" alt class="centered-error-image" />
+              <p class="centered-error-title">Unable to load your recipe feed due to a connection problem.</p>
+            </div>
+          </Block>
+        {/if}
       </Tab>
       <Tab id="tab-3" class="page-content">
           {#if isLogin}
@@ -218,13 +238,13 @@
               <!-- svelte-ignore a11y-no-noninteractive-tabindex -->
               <!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
               <div class="profile-header">
-                <img src="../images/components/hat.png" alt class="chef-hat" />
+                <img src="../images/images/hat.png" alt class="chef-hat" />
                 <div class="profile-avatar-wrapper">
-                  <img src={$user.profilePicture} alt="Avatar utente" class="profile-avatar"/>
+                  <img src={$user.profilePicture} alt class="profile-avatar"/>
                 </div>
                 <!-- svelte-ignore a11y-click-events-have-key-events -->
                 <!-- svelte-ignore a11y-no-noninteractive-tabindex -->
-                <img src="../images/components/exit_button.png" alt class="profile-close-img" on:click={closeProfile} tabindex="0" style="cursor:pointer;"/>
+                <img src="../images/images/exit_button.png" alt class="profile-close-img" on:click={closeProfile} tabindex="0" style="cursor:pointer;"/>
               </div>
               <div class="profile-info">
                 <span class="profile-username">{$user.username}</span>
@@ -249,11 +269,7 @@
                       <!-- svelte-ignore a11y-no-static-element-interactions -->
                       <div class="recipe-card" on:click={() => openRecipeModal(recipe)} tabindex="0" aria-label={"Apri ricetta " + recipe.title}>
                         <div class="recipe-image-wrapper">
-                          <img
-                            src={recipe.cover || recipe.image || '../images/placeholders/default_image.png'}
-                            alt={recipe.title}
-                            class="recipe-card-image"
-                          />
+                          <img src={"http://localhost:5000" + recipe.cover ||recipe.cover || recipe.image || '../images/placeholders/default_image.png'} alt class="recipe-card-image"/>
                         </div>
                         <div class="recipe-title">{recipe.title}</div>
                       </div>
@@ -266,10 +282,10 @@
             {:else}
           <div class="login-container">
             <div class="container-box">
-              <img class="chef-img" src="../images/components/login_suggestion.png" alt="Chef" />
+              <img class="chef-img" src="../images/images/login_suggestion.png" alt/>
               <div class="login-title">Jump in! Your kitchen awaits!</div>
               <button class="google-sign-in-button" on:click={loginWithGoogle}>
-                <img class="google-icon" src="../images/google_icon.png" alt="Google logo" />
+                <img class="google-icon" src="../images/google_icon.png" alt/>
                 <span class="container-login-text">Accedi con Google</span>
               </button>
             </div>
@@ -286,6 +302,7 @@ import { category } from '../js/store.js';
 import { auth, provider } from '../js/firebaseConfig.js';
 import { signInWithPopup } from "firebase/auth";
 import { user } from '../js/store.js';
+import { onMount } from 'svelte';
 
 const API_URL = "http://localhost:5000";
 $: categoryValue = $category;
@@ -307,291 +324,47 @@ function toRecipe(){
 let isLogin = false ; // default false
 
 // Login/Register end
-let items = [
-  {
-    title: 'Carbonara',
-    cover: '../images/images/IMG_0819-843347201.jpg',
-    views: 5322,
-    description: 'Un classico della cucina romana, ricco e saporito.',
-    likes: 14,
-    serving: 4,
-    minutes: 20,
-    author: 'Mario Rossi',
-    category: 'Burger',
-    ingridients:[
-      {
-        name: "salt",
-        kg: "23.9g",
-        cover: "../images/ingridients/salt.jpg"
-      },
-      {
-        name: "butter",
-        kg: "3.9g",
-        cover: "../images/ingridients/butter.jpg"
-      },],
-  },
-  {
-    title: 'Spaghetti di Ludo',
-    cover: '../images/images/spaghetti_ludo.jpg',
-    views: 3745,
-    description: 'Una rivisitazione originale degli spaghetti, un\'esplosione di gusto.',
-    likes: 10,
-    serving: 4,
-    minutes: 15,
-    author: 'Luigi Bianchi',
-    category: 'Pizza',
-    ingridients:[
-      {
-        name: "salt 2",
-        kg: "23.9g",
-        cover: "../images/ingridients/salt.jpg"
-      },
-      {
-        name: "butter 2",
-        kg: "3.9g",
-        cover: "../images/ingridients/butter.jpg"
-      },
-    ],
-  },
-  {
-    title: 'Billie Jean',
-    cover: 'https://cdn.framework7.io/placeholder/abstract-88x88-3.jpg',
-    views: 2987,
-    description: 'Un dessert sorprendente, un omaggio alla pop star.',
-    likes: 13,
-    serving: 2,
-    minutes: 30,
-    author: 'Giulia Verdi',
-    category: 'Dessert',
-    ingridients:[
-      {
-        name: "salt",
-        kg: "23.9g",
-        cover: "../images/ingridients/salt.jpg"
-      },
-      {
-        name: "butter",
-        kg: "3.9g",
-        cover: "../images/ingridients/butter.jpg"
-      },],
-  },
-  {
-    title: 'Elemento 4',
-    cover: 'https://cdn.framework7.io/placeholder/abstract-88x88-3.jpg',
-    views: 4120,
-    description: 'Un antipasto sfizioso, ideale per aprire ogni pasto.',
-    likes: 7,
-    serving: 5,
-    minutes: 25,
-    author: 'Carla Neri',
-    category: 'Appetizer',
-    ingridients:[
-      {
-        name: "salt",
-        kg: "23.9g",
-        cover: "../images/ingridients/salt.jpg"
-      },
-      {
-        name: "butter",
-        kg: "3.9g",
-        cover: "../images/ingridients/butter.jpg"
-      },],
-  },
-  {
-    title: 'Pesto Genovese',
-    cover: 'https://cdn.framework7.io/placeholder/abstract-88x88-4.jpg',
-    views: 3666,
-    description: 'Un condimento ligure famoso in tutto il mondo, profumato e intenso.',
-    likes: 11,
-    serving: 3,
-    minutes: 18,
-    author: 'Roberto Di Luca',
-    category: 'Main Course',
-    ingridients:[
-      {
-        name: "salt",
-        kg: "23.9g",
-        cover: "../images/ingridients/salt.jpg"
-      },
-      {
-        name: "butter",
-        kg: "3.9g",
-        cover: "../images/ingridients/butter.jpg"
-      },],
-  },
-  {
-    title: 'Riso alla Cantonese',
-    cover: 'https://cdn.framework7.io/placeholder/abstract-88x88-5.jpg',
-    views: 2854,
-    description: 'Un classico della cucina cinese, colorato e gustoso.',
-    likes: 16,
-    serving: 4,
-    minutes: 25,
-    author: 'Mario Rossi',
-    category: 'Salads',
-    ingridients:[
-      {
-        name: "salt",
-        kg: "23.9g",
-        cover: "../images/ingridients/salt.jpg"
-      },
-      {
-        name: "butter",
-        kg: "3.9g",
-        cover: "../images/ingridients/butter.jpg"
-      },],
-  },
-  {
-    title: 'Pollo al Curry',
-    cover: 'https://cdn.framework7.io/placeholder/abstract-88x88-6.jpg',
-    views: 3231,
-    description: 'Un piatto esotico e speziato, un viaggio nei sapori dell\'India.',
-    likes: 19,
-    serving: 2,
-    minutes: 22,
-    author: 'Carla Neri',
-    category: 'Sushi',
-    ingridients:[
-      {
-        name: "salt",
-        kg: "23.9g",
-        cover: "../images/ingridients/salt.jpg"
-      },
-      {
-        name: "butter",
-        kg: "3.9g",
-        cover: "../images/ingridients/butter.jpg"
-      },],
-  },
-  {
-    title: 'Pizza Montanara',
-    cover: 'https://cdn.framework7.io/placeholder/abstract-88x88-2.jpg',
-    views: 4977,
-    description: 'Una pizza fritta napoletana, un\'esperienza unica di gusto e tradizione.',
-    likes: 18,
-    serving: 4,
-    minutes: 15,
-    author: 'Giulia Verdi',
-    category: 'Main Course',
-    ingridients:[
-      {
-        name: "salt",
-        kg: "23.9g",
-        cover: "../images/ingridients/salt.jpg"
-      },
-      {
-        name: "butter",
-        kg: "3.9g",
-        cover: "../images/ingridients/butter.jpg"
-      },],
-  },
-  {
-    title: 'Tiramisù Classico',
-    cover: 'https://cdn.framework7.io/placeholder/abstract-88x88-7.jpg',
-    views: 5230,
-    description: 'Un dessert italiano amato in tutto il mondo, un\'armonia di sapori e consistenze.',
-    likes: 28,
-    serving: 6,
-    minutes: 30,
-    author: 'Luigi Bianchi',
-    category: 'Dessert',
-    ingridients:[
-      {
-        name: "salt",
-        kg: "23.9g",
-        cover: "../images/ingridients/salt.jpg"
-      },
-      {
-        name: "butter",
-        kg: "3.9g",
-        cover: "../images/ingridients/butter.jpg"
-      },],
-  },
-  {
-    title: 'Cous Cous di Verdure',
-    cover: 'https://cdn.framework7.io/placeholder/abstract-88x88-8.jpg',
-    views: 1867,
-    description: 'Un piatto mediorientale leggero e nutriente, un\'esplosione di colori e profumi.',
-    likes: 10,
-    serving: 3,
-    minutes: 18,
-    author: 'Roberto Di Luca',
-    category: 'Pasta',
-    ingridients:[
-      {
-        name: "salt",
-        kg: "23.9g",
-        cover: "../images/ingridients/salt.jpg"
-      },
-      {
-        name: "butter",
-        kg: "3.9g",
-        cover: "../images/ingridients/butter.jpg"
-      },],
-  },
-  {
-    title: 'Salmone al Limone',
-    cover: 'https://cdn.framework7.io/placeholder/abstract-88x88-9.jpg',
-    views: 2543,
-    description: 'Un piatto semplice e raffinato, un classico della cucina mediterranea.',
-    likes: 12,
-    serving: 4,
-    minutes: 23,
-    author: 'Giulia Verdi',
-    category: 'Pasta',
-    ingridients:[
-      {
-        name: "salt",
-        kg: "23.9g",
-        cover: "../images/ingridients/salt.jpg"
-      },
-      {
-        name: "butter",
-        kg: "3.9g",
-        cover: "../images/ingridients/butter.jpg"
-      },],
-  },
-  {
-    title: 'Focaccia alle Erbe',
-    cover: 'https://cdn.framework7.io/placeholder/abstract-88x88-10.jpg',
-    views: 3120,
-    description: 'Un pane lievitato profumato e gustoso, ideale per accompagnare ogni pasto.',
-    likes: 17,
-    serving: 3,
-    minutes: 20,
-    author: 'Carla Neri',
-    category: 'Sushi',
-    ingridients:[
-      {
-        name: "salt",
-        kg: "23.9g",
-        cover: "../images/ingridients/salt.jpg"
-      },
-      {
-        name: "butter",
-        kg: "3.9g",
-        cover: "../images/ingridients/butter.jpg"
-      },],
-  },
-];
 
-// Random recipe
-let randomValue = null;
+let items = [];
+let loading = true;
+
+onMount(async () => {
+  try {
+    loading = true;
+    const response = await fetch(`${API_URL}/api/recipes`);
+    const data = await response.json();
+    items = data;
+    /* console.log("RICETTE CARICATE:", items); */
+  } catch (error) {
+    console.error("Errore nel caricamento delle ricette:", error);
+  } finally {
+    loading = false;
+  }
+});
+
+let today_selection = null;
 let lastUpdateDate = null;
+let randomValue = null;
 
-function updateRandomValue() {
-    const today = new Date().toDateString();
-
-    if (lastUpdateDate !== today) {
-        randomValue = Math.floor(Math.random() * items.length);
-        lastUpdateDate = today;
+$: {
+  const today = new Date().toDateString();
+  if (items.length > 0 && lastUpdateDate !== today) {
+    randomValue = Math.floor(Math.random() * items.length);
+    lastUpdateDate = today;
+    today_selection = items[randomValue];
+    if (today_selection.cover && !today_selection.cover.startsWith('http')) {
+      today_selection.cover = "http://localhost:5000" + today_selection.cover;
     }
-
-    return randomValue;
+  } else if (items.length > 0 && today_selection === null) {
+    randomValue = Math.floor(Math.random() * items.length);
+    today_selection = items[randomValue];
+    if (today_selection.cover && !today_selection.cover.startsWith('http')) {
+      today_selection.cover = "http://localhost:5000" + today_selection.cover;
+    }
+  }
 }
 
-updateRandomValue();
-let today_selection = items[randomValue];
+$: trending = [...items].sort((a, b) => b.views - a.views).slice(0, 10);
 
 // Recipe Popup
 let selectedRecipe = null;
@@ -600,13 +373,11 @@ let showPopup = false;
 function openRecipeModal(item) {
   selectedRecipe = {
     ...item,
-    ingridients: item.ingridients || item.ingredients || [],
-    cover: item.cover || item.image || '../images/placeholders/default_image.png',
-    author: (typeof item.author === 'object' && item.author)
-      ? (item.author.username || item.author.name || '')
-      : '',
+    ingredients: item.ingredients || item.ingredients || [],
+    cover: item.cover ? (item.cover.startsWith('http') ? item.cover : "http://localhost:5000" + item.cover): item.image || '../images/placeholders/default_image.png',
+    author: (typeof item.author === 'object' && item.author) ? (item.author.username || item.author.name || '') : item.author || '',
     serving: item.serving ?? item.servings ?? '',
-    minutes: item.minutes ?? '',
+    minutes: item.minutes ?? item.time ?? 0,
     views: item.views ?? 0,
     likes: item.likes ?? 0,
     category: item.category || 'Default Category',
@@ -614,7 +385,9 @@ function openRecipeModal(item) {
     title: item.title || '',
   };
   showPopup = true;
+  /* console.log(selectedRecipe.author); */
 }
+
 
 function closeRecipeModal() {
   showPopup = false;
@@ -648,7 +421,7 @@ function greetUserByTime() {
   } 
 
 // Reloading effects
-  let loading = false;
+  let loading_structure = false;
   let effect = "fade";
 
 // Login with Google Firebase
@@ -685,4 +458,6 @@ async function loginWithGoogle() {
     console.error("Internal application error:", error);
   }
 }
+
+
 </script>

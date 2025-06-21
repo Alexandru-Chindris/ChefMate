@@ -12,7 +12,7 @@ var routes = [
   {
     name: 'Main',
     path: '/',
-    component: HomePage, // Default: HomePage
+    component: MainView, // Default: HomePage
   },
   {
     name: 'Debug',

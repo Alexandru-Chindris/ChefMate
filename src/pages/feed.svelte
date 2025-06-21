@@ -28,7 +28,7 @@
       });
   
       if (liked) {
-        const particleCount = 5;
+        const particleCount = 10;
         for (let i = 0; i < particleCount; i++) {
           particles = [...particles, createParticle()];
         }

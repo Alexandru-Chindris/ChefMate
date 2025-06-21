@@ -155,14 +155,73 @@ body, html {
 }
 
 .main-page .today-recipe-correction {
-    opacity: 80%;
+    opacity: 1;
     width: 100%;
     height: 20vh;
     background-size: cover;
+    background-position: center;
     background-image: var(--today-pic);
     margin-top: 0px;
     right: 1.6vh;
     margin-bottom: 0vh;
+    border-radius: 14px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.18);
+    transition: box-shadow 0.2s, opacity 0.2s;
+}
+
+.empty-message {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 40vh;
+}
+
+.empty-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.centered-error-block {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 60vh;
+}
+
+.centered-error-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.centered-error-title {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #b44e00;
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.centered-error-image {
+  width: 290px;
+  max-width: 60vw;
+  opacity: 0.9;
+}
+
+.empty-img {
+  width: 300px;
+  max-width: 60vw;
+  margin-bottom: 1.5rem;
+  opacity: 0.8;
+}
+
+.no-recipes-message {
+  font-size: 1.15rem;
+  font-weight: 500;
+  color: #b44e00;
+  text-align: center;
+  margin: 0;
 }
 
 .main-page .cus-today {

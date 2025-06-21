@@ -255,6 +255,7 @@ $: canSave = recipeName.trim().length > 0
 async function saveRecipe() {
   const userId = $user?._id;
 
+  // Prepara i dati della ricetta
   const recipe = {
     title: recipeName,
     description: recipeDescription,
@@ -268,28 +269,51 @@ async function saveRecipe() {
     author: userId
   };
 
-  const response = await fetch('http://localhost:5000/recipes', {
+  // Usa FormData per inviare sia i dati che il file
+  const formData = new FormData();
+  formData.append('title', recipe.title);
+  formData.append('description', recipe.description);
+  formData.append('category', recipe.category);
+  formData.append('time', recipe.time);
+  formData.append('author', recipe.author);
+
+  // Serializza gli ingredienti come JSON
+  formData.append('ingredients', JSON.stringify(recipe.ingredients));
+
+  // Aggiungi il file immagine se presente
+  if (file) {
+    formData.append('cover', file);
+  }
+
+  // Fai la richiesta al backend (assicurati che la rotta sia /api/recipes)
+  const response = await fetch('http://localhost:5000/api/recipes', {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(recipe)
+    body: formData
+    // NON aggiungere headers: { 'Content-Type': 'application/json' }
   });
 
   if (response.ok) {
-    console.log("Request send");
+    console.log("Ricetta inviata con successo!");
     f7.views.main.router.navigate('/');
+  } else {
+    const error = await response.json();
+    alert("Errore nel salvataggio: " + (error.message || 'Errore sconosciuto'));
   }
 }
+
 
 // Image Upload
 let imageUrl = '';
 let fileInput = null;
+let file = null;
 
 function handleFileChange(event) {
-  const file = event.target.files[0];
+  file = event.target.files[0];
   if (file) {
     imageUrl = URL.createObjectURL(file);
   }
 }
+
 
 function handleImageClick() {
   if (fileInput) {
