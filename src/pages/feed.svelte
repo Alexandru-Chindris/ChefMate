@@ -74,8 +74,8 @@
       </p>
       <div class="feed-footer">
         <div class="source">
-          <img src={user.profilePicture} alt class="source-logo" />
-          <span>{item.author}</span>
+          <img src={item.author && typeof item.author === 'object' && item.author.profilePicture ? item.author.profilePicture : '/images/default-profile.png'} alt class="source-logo" />
+          <span>{item.author && typeof item.author === 'object' ? (item.author.username || item.author.name || 'Autore sconosciuto') : (item.author || 'Autore sconosciuto')}</span>
         </div>
         <div>
           <a href class="bookmark">

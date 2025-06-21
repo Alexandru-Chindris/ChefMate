@@ -1118,16 +1118,16 @@ body, html {
 
 .promo-text{
     color: #313638;
-    font-size: 2vh;
+    font-size: 2.1vh;
     font-weight: bolder;
 }
 
 .promo-img {
-  width: 170px;
+  width: 190px;
   height: auto;
-  margin-right: 24px;
+  margin-right: 10px;
   position: relative;
-  top: -24px;
+  top: -19px;
   z-index: 1;
 }
 /* Promo container end */

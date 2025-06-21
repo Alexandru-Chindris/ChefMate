@@ -146,7 +146,7 @@
                         </Card>
                         <div class="today-row">
                           <span class="cus-today">{today_selection.title}</span>
-                          <span class="cus-today-author pacifico-regular">{today_selection.author}</span>
+                          <span class="cus-today-author pacifico-regular">{today_selection.author && typeof today_selection.author === 'object' ? (today_selection.author.username || today_selection.author.name || 'Autore sconosciuto') : (today_selection.author || 'Autore sconosciuto')}</span>
                         </div>
                       </a>
                     {/if}
@@ -187,7 +187,7 @@
                     </swiper-container>
                     <Block class="promo-container">
                       <div class="promo-content">
-                        <img src="../images/images/promo_image.png" alt class="promo-img"/>
+                        <img src="../images/images/solar_chef.png" alt class="promo-img"/>
                         <div class="promo-text">Sign up, publish and share recipes</div>
                       </div>
                     </Block>
@@ -370,10 +370,19 @@ $: trending = [...items].sort((a, b) => b.views - a.views).slice(0, 10);
 let selectedRecipe = null;
 let showPopup = false;
 
-function openRecipeModal(item) {
+async function openRecipeModal(item) {
+  try {
+    await fetch(`${API_URL}/api/recipes/${item._id}/view`, {
+      method: 'POST'
+    });
+    item.views = (item.views || 0) + 1;
+  } catch (err) {
+    console.error("Errore nell'incrementare le views:", err);
+  }
+
   selectedRecipe = {
     ...item,
-    ingredients: item.ingredients || item.ingredients || [],
+    ingredients: item.ingredients || [],
     cover: item.cover ? (item.cover.startsWith('http') ? item.cover : "http://localhost:5000" + item.cover): item.image || '../images/placeholders/default_image.png',
     author: (typeof item.author === 'object' && item.author) ? (item.author.username || item.author.name || '') : item.author || '',
     serving: item.serving ?? item.servings ?? '',
@@ -385,8 +394,8 @@ function openRecipeModal(item) {
     title: item.title || '',
   };
   showPopup = true;
-  /* console.log(selectedRecipe.author); */
 }
+
 
 
 function closeRecipeModal() {
